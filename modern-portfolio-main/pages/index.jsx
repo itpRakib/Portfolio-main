@@ -30,12 +30,12 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
+            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16 text-white/70"
           >
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate,
-            exercitationem harum, quia nulla temporibus deleniti libero veniam
-            vero beatae numquam ducimus illum ab similique ipsam tempore fugit
-            quod laudantium debitis.
+            Dedicated to building modern, high-performance web applications with clean
+            architectures, fluid user experiences, and robust scalability. Specialized
+            in developing end-to-end full-stack systems that bridge the gap between
+            creative design excellence and technological innovation.
           </motion.p>
 
           {/* btn */}

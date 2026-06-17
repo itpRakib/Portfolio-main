@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
 import WelcomeScreen from "./WelcomeScreen";
+import CustomCursor from "./CustomCursor";
 import { navData } from "./Nav";
 
 import Header from "../components/Header";
@@ -20,6 +21,8 @@ const sora = Sora({
 const Layout = ({ children }) => {
   const router = useRouter();
   const lastScrollTime = useRef(0);
+  const pageTransitioned = useRef(false);
+  const wheelTimeout = useRef(null);
   const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
@@ -40,15 +43,21 @@ const Layout = ({ children }) => {
       // Ignore scroll inputs during welcome overlay
       if (showWelcome) return;
 
-      // Cooldown to prevent rapid scroll page-skipping
-      const now = Date.now();
-      if (now - lastScrollTime.current < 1200) return; // 1.2s cooldown matches page transition
-
       // Ignore horizontal scrolling
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
 
       // Ignore microscopic trackpad/scroll vibrations
       if (Math.abs(e.deltaY) < 5) return;
+
+      // Clear any pending timeout and start a new one
+      // When wheel stops firing for 150ms, we reset the transition status
+      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
+      wheelTimeout.current = setTimeout(() => {
+        pageTransitioned.current = false;
+      }, 150);
+
+      // If we already transitioned on this scroll gesture, ignore it
+      if (pageTransitioned.current) return;
 
       // Check if the scroll target or its parents are scrollable and have room to scroll
       let target = e.target;
@@ -71,6 +80,10 @@ const Layout = ({ children }) => {
 
       if (isInsideScrollable) return;
 
+      // Cooldown to prevent rapid scroll page-skipping
+      const now = Date.now();
+      if (now - lastScrollTime.current < 1000) return; // 1s cooldown matches page transition
+
       // Find current page index in navData
       const currentIndex = navData.findIndex((item) => item.path === router.pathname);
       if (currentIndex === -1) return;
@@ -79,12 +92,14 @@ const Layout = ({ children }) => {
         // Scroll Down -> Next page
         if (currentIndex < navData.length - 1) {
           lastScrollTime.current = now;
+          pageTransitioned.current = true;
           router.push(navData[currentIndex + 1].path);
         }
       } else {
         // Scroll Up -> Prev page
         if (currentIndex > 0) {
           lastScrollTime.current = now;
+          pageTransitioned.current = true;
           router.push(navData[currentIndex - 1].path);
         }
       }
@@ -105,7 +120,7 @@ const Layout = ({ children }) => {
       if (Math.abs(diffY) < 50) return; // minimum swipe distance
 
       const now = Date.now();
-      if (now - lastScrollTime.current < 1200) return;
+      if (now - lastScrollTime.current < 1000) return;
 
       // Check if target is inside a scrollable element
       let target = e.target;
@@ -152,6 +167,7 @@ const Layout = ({ children }) => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
+      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
     };
   }, [router, showWelcome]);
 
@@ -159,6 +175,9 @@ const Layout = ({ children }) => {
     <main
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
     >
+      {/* Custom interactive cursor follow */}
+      <CustomCursor />
+
       {/* Welcome Screen overlay */}
       <AnimatePresence>
         {showWelcome && <WelcomeScreen onEnter={handleEnter} />}
