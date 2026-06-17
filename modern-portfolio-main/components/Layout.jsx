@@ -2,8 +2,6 @@ import { Sora } from "next/font/google";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
-import WelcomeScreen from "./WelcomeScreen";
 import CustomCursor from "./CustomCursor";
 import { navData } from "./Nav";
 
@@ -21,27 +19,14 @@ const sora = Sora({
 const Layout = ({ children }) => {
   const router = useRouter();
   const lastScrollTime = useRef(0);
-  const pageTransitioned = useRef(false);
-  const wheelTimeout = useRef(null);
-  const [showWelcome, setShowWelcome] = useState(false);
 
-  useEffect(() => {
-    // Only show on first browser session load
-    const isVisited = sessionStorage.getItem("welcome_visited");
-    if (!isVisited) {
-      setShowWelcome(true);
-    }
-  }, []);
-
-  const handleEnter = () => {
-    sessionStorage.setItem("welcome_visited", "true");
-    setShowWelcome(false);
-  };
 
   useEffect(() => {
     const handleWheel = (e) => {
-      // Ignore scroll inputs during welcome overlay
-      if (showWelcome) return;
+
+      // Cooldown to prevent rapid scroll page-skipping
+      const now = Date.now();
+      if (now - lastScrollTime.current < 1200) return; // 1.2s cooldown matches page transition
 
       // Ignore horizontal scrolling
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
@@ -49,40 +34,28 @@ const Layout = ({ children }) => {
       // Ignore microscopic trackpad/scroll vibrations
       if (Math.abs(e.deltaY) < 5) return;
 
-      // Clear any pending timeout and start a new one
-      // When wheel stops firing for 150ms, we reset the transition status
-      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
-      wheelTimeout.current = setTimeout(() => {
-        pageTransitioned.current = false;
-      }, 150);
-
-      // If we already transitioned on this scroll gesture, ignore it
-      if (pageTransitioned.current) return;
-
       // Check if the scroll target or its parents are scrollable and have room to scroll
       let target = e.target;
       let isInsideScrollable = false;
 
-      while (target && target !== document.body) {
-        const style = window.getComputedStyle(target);
-        const overflowY = style.overflowY;
-        const isScrollable = overflowY === "auto" || overflowY === "scroll";
-        if (isScrollable) {
-          const canScrollDown = target.scrollHeight - target.scrollTop > target.clientHeight + 2;
-          const canScrollUp = target.scrollTop > 2;
-          if ((e.deltaY > 0 && canScrollDown) || (e.deltaY < 0 && canScrollUp)) {
-            isInsideScrollable = true;
-            break;
+      while (target && target !== document.body && target !== document.documentElement) {
+        if (target instanceof Element) {
+          const style = window.getComputedStyle(target);
+          const overflowY = style.overflowY;
+          const isScrollable = overflowY === "auto" || overflowY === "scroll";
+          if (isScrollable) {
+            const canScrollDown = target.scrollHeight - target.scrollTop > target.clientHeight + 2;
+            const canScrollUp = target.scrollTop > 2;
+            if ((e.deltaY > 0 && canScrollDown) || (e.deltaY < 0 && canScrollUp)) {
+              isInsideScrollable = true;
+              break;
+            }
           }
         }
         target = target.parentNode;
       }
 
       if (isInsideScrollable) return;
-
-      // Cooldown to prevent rapid scroll page-skipping
-      const now = Date.now();
-      if (now - lastScrollTime.current < 1000) return; // 1s cooldown matches page transition
 
       // Find current page index in navData
       const currentIndex = navData.findIndex((item) => item.path === router.pathname);
@@ -92,14 +65,12 @@ const Layout = ({ children }) => {
         // Scroll Down -> Next page
         if (currentIndex < navData.length - 1) {
           lastScrollTime.current = now;
-          pageTransitioned.current = true;
           router.push(navData[currentIndex + 1].path);
         }
       } else {
         // Scroll Up -> Prev page
         if (currentIndex > 0) {
           lastScrollTime.current = now;
-          pageTransitioned.current = true;
           router.push(navData[currentIndex - 1].path);
         }
       }
@@ -110,8 +81,6 @@ const Layout = ({ children }) => {
     };
 
     const handleTouchEnd = (e) => {
-      // Ignore swipe inputs during welcome overlay
-      if (showWelcome) return;
 
       if (typeof window.touchStartY === "undefined") return;
       const touchEndY = e.changedTouches[0].clientY;
@@ -120,22 +89,24 @@ const Layout = ({ children }) => {
       if (Math.abs(diffY) < 50) return; // minimum swipe distance
 
       const now = Date.now();
-      if (now - lastScrollTime.current < 1000) return;
+      if (now - lastScrollTime.current < 1200) return;
 
       // Check if target is inside a scrollable element
       let target = e.target;
       let isInsideScrollable = false;
 
-      while (target && target !== document.body) {
-        const style = window.getComputedStyle(target);
-        const overflowY = style.overflowY;
-        const isScrollable = overflowY === "auto" || overflowY === "scroll";
-        if (isScrollable) {
-          const canScrollDown = target.scrollHeight - target.scrollTop > target.clientHeight + 2;
-          const canScrollUp = target.scrollTop > 2;
-          if ((diffY > 0 && canScrollDown) || (diffY < 0 && canScrollUp)) {
-            isInsideScrollable = true;
-            break;
+      while (target && target !== document.body && target !== document.documentElement) {
+        if (target instanceof Element) {
+          const style = window.getComputedStyle(target);
+          const overflowY = style.overflowY;
+          const isScrollable = overflowY === "auto" || overflowY === "scroll";
+          if (isScrollable) {
+            const canScrollDown = target.scrollHeight - target.scrollTop > target.clientHeight + 2;
+            const canScrollUp = target.scrollTop > 2;
+            if ((diffY > 0 && canScrollDown) || (diffY < 0 && canScrollUp)) {
+              isInsideScrollable = true;
+              break;
+            }
           }
         }
         target = target.parentNode;
@@ -167,9 +138,8 @@ const Layout = ({ children }) => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
-      if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
     };
-  }, [router, showWelcome]);
+  }, [router]);
 
   return (
     <main
@@ -178,10 +148,7 @@ const Layout = ({ children }) => {
       {/* Custom interactive cursor follow */}
       <CustomCursor />
 
-      {/* Welcome Screen overlay */}
-      <AnimatePresence>
-        {showWelcome && <WelcomeScreen onEnter={handleEnter} />}
-      </AnimatePresence>
+
 
       {/* metadata */}
       <Head>
