@@ -9,8 +9,8 @@ const Header = () => {
           {/* logo */}
           <Link href="/" className="flex items-center gap-x-3 group relative select-none">
             {/* HUD animated spinner scaled-down wrapper */}
-            <div className="w-[50px] h-[50px] flex items-center justify-center overflow-visible relative">
-              <div className="absolute scale-[0.15] origin-center flex items-center justify-center pointer-events-none">
+            <div className="w-[60px] h-[60px] flex items-center justify-center overflow-visible relative">
+              <div className="absolute scale-[0.2] origin-center flex items-center justify-center pointer-events-none">
                 <div className="logo-svg-frame">
                   {/* SVG 1 */}
                   <svg style={{ "--i": 0, "--j": 0 }}>

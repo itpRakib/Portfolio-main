@@ -486,6 +486,29 @@
   transform-origin: center;
 }
 
+/* Glowing Neon HUD Effects */
+.logo-svg-frame [stroke="#00FFFF"],
+.logo-svg-frame [fill="#00FFFF"] {
+  filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.4));
+  transition: filter 0.3s ease;
+}
+
+.group:hover .logo-svg-frame [stroke="#00FFFF"],
+.group:hover .logo-svg-frame [fill="#00FFFF"] {
+  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 12px rgba(0, 255, 255, 0.4));
+}
+
+#logo-out3,
+#logo-center1 {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 0, 0.4)) !important;
+  transition: filter 0.3s ease;
+}
+
+.group:hover #logo-out3,
+.group:hover #logo-center1 {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 12px rgba(255, 255, 0, 0.4)) !important;
+}
+
 @keyframes rotate16 {
   to {
     transform: rotate(360deg);
