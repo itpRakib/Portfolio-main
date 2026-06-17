@@ -440,6 +440,31 @@
   align-items: center;
 }
 
+/* Glowing reactor core backdrop behind the spinner */
+.logo-svg-frame::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.35) 0%, rgba(241, 48, 36, 0.08) 50%, rgba(0, 0, 0, 0) 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(8px);
+  animation: logo-core-pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes logo-core-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
 .logo-svg-frame svg {
   position: absolute;
   transition: .5s;
@@ -448,6 +473,7 @@
   width: 344px;
   height: 344px;
   fill: none;
+  filter: drop-shadow(0 0 7px rgba(0, 255, 255, 0.5));
 }
 
 .group:hover .logo-svg-frame svg {
@@ -472,6 +498,7 @@
   animation: rotate16 3s ease-in-out infinite alternate;
   transform-origin: center;
   stroke: #ff0;
+  filter: drop-shadow(0 0 9px rgba(255, 255, 0, 0.7));
 }
 
 #logo-inner3,
@@ -484,29 +511,12 @@
   fill: #ff0;
   animation: rotate16 2s ease-in-out infinite alternate;
   transform-origin: center;
+  filter: drop-shadow(0 0 9px rgba(255, 255, 0, 0.7));
 }
 
-/* Glowing Neon HUD Effects */
-.logo-svg-frame [stroke="#00FFFF"],
-.logo-svg-frame [fill="#00FFFF"] {
-  filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.4));
-  transition: filter 0.3s ease;
-}
-
-.group:hover .logo-svg-frame [stroke="#00FFFF"],
-.group:hover .logo-svg-frame [fill="#00FFFF"] {
-  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 12px rgba(0, 255, 255, 0.4));
-}
-
-#logo-out3,
-#logo-center1 {
-  filter: drop-shadow(0 0 2px rgba(255, 255, 0, 0.4)) !important;
-  transition: filter 0.3s ease;
-}
-
-.group:hover #logo-out3,
-.group:hover #logo-center1 {
-  filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8)) drop-shadow(0 0 12px rgba(255, 255, 0, 0.4)) !important;
+/* High-tech text glow effect on hover */
+.group:hover span {
+  text-shadow: 0 0 10px rgba(241, 48, 36, 0.55), 0 0 20px rgba(241, 48, 36, 0.25);
 }
 
 @keyframes rotate16 {
