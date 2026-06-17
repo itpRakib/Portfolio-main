@@ -1,0 +1,32 @@
+# dependencies
+modern-portfolio-main/node_modules/
+modern-portfolio-main/.pnp
+modern-portfolio-main/.pnp.js
+
+# testing
+modern-portfolio-main/coverage/
+
+# next.js
+modern-portfolio-main/.next/
+modern-portfolio-main/out/
+
+# production
+modern-portfolio-main/build/
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

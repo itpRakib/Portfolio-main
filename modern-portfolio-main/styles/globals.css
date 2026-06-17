@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.translate-z-0 {
+  transform: translateZ(0px);
+}
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-pagination-horizontal.swiper-pagination-bullets
+  .swiper-pagination-bullet {
+  background-color: #f13024;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after,
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  color: #f13024;
+}
+
+@layer base {
+  body {
+    @apply bg-secondary overflow-hidden leading-relaxed;
+  }
+  .page {
+    @apply w-full h-screen overflow-hidden;
+  }
+  .h1 {
+    @apply text-[35px] leading-tight md:text-[60px] md:leading-[1.3] mb-8 font-semibold;
+  }
+  .h2 {
+    @apply text-[35px] leading-tight md:text-[54px] md:leading-[1.3] mb-4 font-semibold;
+  }
+  p {
+    @apply leading-[1.8] text-white/60 font-light;
+  }
+  .btn,
+  .input {
+    @apply h-[52px];
+  }
+  .input {
+    @apply w-full h-[52px] rounded-lg pl-6;
+  }
+  .input,
+  .textarea {
+    @apply bg-transparent outline-none focus:ring-1 focus:ring-accent border border-white/20 placeholder:text-white/30 placeholder:font-light;
+  }
+  .textarea {
+    @apply w-full h-[180px] p-6 rounded-lg resize-none;
+  }
+}
+
+/* Light Button Styles from Uiverse.io modified for accent theme */
+.light-button a.bt {
+  position: relative;
+  height: 140px;
+  width: 100px;
+  display: flex;
+  align-items: flex-end;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.light-button a.bt .button-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100px;
+  background-color: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+  font-size: 11px;
+  transition: 300ms;
+  outline: rgba(255, 255, 255, 0.1) 1px solid;
+  outline-offset: 10px;
+}
+
+.light-button a.bt .button-holder svg,
+.light-button a.bt .button-holder .social-icon {
+  height: 28px;
+  width: 28px;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.45);
+  fill: rgba(255, 255, 255, 0.45);
+  transition: 300ms;
+  margin-bottom: 6px;
+}
+
+.light-button a.bt .light-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 140px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.light-button a.bt .light-holder .dot {
+  position: absolute;
+  top: 15px;
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  z-index: 2;
+  transition: 300ms;
+}
+
+.light-button a.bt .light-holder .light {
+  position: absolute;
+  top: 15px;
+  width: 120px;
+  height: 125px;
+  clip-path: polygon(50% 0%, 15% 100%, 85% 100%);
+  background: transparent;
+  transition: 300ms;
+}
+
+/* Hover States */
+.light-button a.bt:hover .button-holder svg,
+.light-button a.bt:hover .button-holder .social-icon {
+  fill: #f13024;
+  color: #f13024;
+  filter: drop-shadow(0 0 4px rgba(241, 48, 36, 0.5));
+}
+
+.light-button a.bt:hover .button-holder {
+  color: #f13024;
+  outline: #f13024 1.5px solid;
+  outline-offset: 2px;
+  border-color: rgba(241, 48, 36, 0.3);
+  background-color: #080808;
+  box-shadow: 0 0 15px rgba(241, 48, 36, 0.15);
+}
+
+.light-button a.bt:hover .light-holder .dot {
+  background-color: #f13024;
+  box-shadow: 0 0 10px #f13024;
+}
+
+.light-button a.bt:hover .light-holder .light {
+  background: linear-gradient(
+    180deg,
+    rgba(241, 48, 36, 0.45) 0%,
+    rgba(241, 48, 36, 0.05) 65%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Gmail Slide Button Styles from Uiverse.io modified for accent theme */
+.gmail-button {
+  height: 50px;
+  width: 150px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  background: none;
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.gmail-button:hover {
+  box-shadow: 0 0 20px rgba(241, 48, 36, 0.3);
+  border-color: #f13024;
+}
+
+.gmail-button::after {
+  content: "Open Gmail";
+  height: 50px;
+  width: 150px;
+  background-color: #f13024;
+  color: #fff;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translateY(50px);
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.gmail-button::before {
+  content: "Email Me";
+  height: 50px;
+  width: 150px;
+  background-color: #0d0d0d;
+  color: #fff;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translateY(0px) scale(1.1);
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.gmail-button:hover::after {
+  transform: translateY(0) scale(1.1);
+}
+
+.gmail-button:hover::before {
+  transform: translateY(-50px) scale(0) rotate(120deg);
+}
+
+/* Resume continue-application button styling from Uiverse.io modified for accent theme */
+.continue-application {
+  --color: #fff;
+  --background: #121214;
+  --background-hover: #f13024;
+  --background-left: #080809;
+  --folder: #F3E9CB;
+  --folder-inner: #BEB393;
+  --paper: #FFFFFF;
+  --paper-lines: #BBC1E1;
+  --paper-behind: #E1E6F9;
+  --pencil-cap: #fff;
+  --pencil-top: #f13024;
+  --pencil-middle: #fff;
+  --pencil-bottom: #f97316;
+  --shadow: rgba(13, 15, 25, .2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  border-radius: 24px; /* Rounded pill style to match portfolio theme */
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 19px;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 12px 34px 12px 64px;
+  transition: all 0.3s;
+  color: var(--color);
+  background: var(--bg, var(--background));
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.continue-application:hover {
+  border-color: #f13024;
+  box-shadow: 0 0 20px rgba(241, 48, 36, 0.3);
+}
+
+.continue-application > div {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  position: absolute;
+  overflow: hidden;
+  border-radius: 24px 0 0 24px;
+  background: var(--background-left);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.continue-application > div .folder {
+  width: 20px;
+  height: 22px;
+  position: absolute;
+  left: 14px;
+  top: 10px;
+}
+
+.continue-application > div .folder .top {
+  left: 0;
+  top: 0;
+  z-index: 2;
+  position: absolute;
+  transform: translateX(var(--fx, 0));
+  transition: transform 0.4s ease var(--fd, 0.3s);
+}
+
+.continue-application > div .folder .top svg {
+  width: 20px;
+  height: 22px;
+  display: block;
+  fill: var(--folder);
+  transform-origin: 0 50%;
+  transition: transform 0.3s ease var(--fds, 0.45s);
+  transform: perspective(120px) rotateY(var(--fr, 0deg));
+}
+
+.continue-application > div .folder:before, .continue-application > div .folder:after,
+.continue-application > div .folder .paper {
+  content: "";
+  position: absolute;
+  left: var(--l, 0);
+  top: var(--t, 0);
+  width: var(--w, 100%);
+  height: var(--h, 100%);
+  border-radius: 1px;
+  background: var(--b, var(--folder-inner));
+}
+
+.continue-application > div .folder:before {
+  box-shadow: 0 1.5px 3px var(--shadow), 0 2.5px 5px var(--shadow), 0 3.5px 7px var(--shadow);
+  transform: translateX(var(--fx, 0));
+  transition: transform 0.4s ease var(--fd, 0.3s);
+}
+
+.continue-application > div .folder:after,
+.continue-application > div .folder .paper {
+  --l: 1px;
+  --t: 1px;
+  --w: 18px;
+  --h: 20px;
+  --b: var(--paper-behind);
+}
+
+.continue-application > div .folder:after {
+  transform: translate(var(--pbx, 0), var(--pby, 0));
+  transition: transform 0.4s ease var(--pbd, 0s);
+}
+
+.continue-application > div .folder .paper {
+  z-index: 1;
+  --b: var(--paper);
+}
+
+.continue-application > div .folder .paper:before, .continue-application > div .folder .paper:after {
+  content: "";
+  width: var(--wp, 12px);
+  height: 1.5px;
+  border-radius: 1px;
+  transform: scaleY(0.5);
+  left: 2.5px;
+  top: var(--tp, 2.5px);
+  position: absolute;
+  background: var(--paper-lines);
+  box-shadow: 0 8px 0 0 var(--paper-lines), 0 16px 0 0 var(--paper-lines);
+}
+
+.continue-application > div .folder .paper:after {
+  --tp: 5px;
+  --wp: 8px;
+}
+
+.continue-application > div .pencil {
+  height: 2px;
+  width: 2.5px;
+  border-radius: 1px 1px 0 0;
+  top: 6px;
+  left: 105%;
+  position: absolute;
+  z-index: 3;
+  transform-origin: 50% 15px;
+  background: var(--pencil-cap);
+  transform: translateX(var(--pex, 0)) rotate(35deg);
+  transition: transform 0.4s ease var(--pbd, 0s);
+}
+
+.continue-application > div .pencil:before, .continue-application > div .pencil:after {
+  content: "";
+  position: absolute;
+  display: block;
+  background: var(--b, linear-gradient(var(--pencil-top) 55%, var(--pencil-middle) 55.1%, var(--pencil-middle) 60%, var(--pencil-bottom) 60.1%));
+  width: var(--w, 4px);
+  height: var(--h, 16px);
+  border-radius: var(--br, 2.5px 2.5px 0 0);
+  top: var(--t, 2px);
+  left: var(--l, -1px);
+}
+
+.continue-application > div .pencil:before {
+  -webkit-clip-path: polygon(0 5%, 4px 5%, 4px 13px, 50% 16px, 0 13px);
+  clip-path: polygon(0 5%, 4px 5%, 4px 13px, 50% 16px, 0 13px);
+}
+
+.continue-application > div .pencil:after {
+  --b: none;
+  --w: 2.5px;
+  --h: 5px;
+  --br: 0 2px 1px 0;
+  --t: 2.5px;
+  --l: 2.5px;
+  border-top: 1px solid var(--pencil-top);
+  border-right: 1px solid var(--pencil-top);
+}
+
+.continue-application:before, .continue-application:after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--color);
+  transform-origin: 7px 1px;
+  transform: translateX(var(--cx, 0)) scale(0.5) rotate(var(--r, -45deg));
+  top: 21px;
+  right: 14px;
+  transition: transform 0.3s;
+}
+
+.continue-application:after {
+  --r: 45deg;
+}
+
+.continue-application:hover {
+  --cx: 2px;
+  --bg: var(--background-hover);
+  --fx: -32px;
+  --fr: -60deg;
+  --fd: .15s;
+  --fds: 0s;
+  --pbx: 2px;
+  --pby: -2px;
+  --pbd: .15s;
+  --pex: -20px;
+}
