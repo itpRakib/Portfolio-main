@@ -51,155 +51,342 @@
 }
 
 /* Social Fan-Out Card from Uiverse.io by vinodjangid07 — adapted for dark accent theme */
-.social-card {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  background: #131319;
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 7px 29px rgba(0, 0, 0, 0.4);
-  transition: all 1s ease-in-out;
-  border: 2px solid rgba(255, 255, 255, 0.06);
+/* Social Grid Card from Uiverse.io by Praashoo7 */
+.social-grid .main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
-.social-card .sc-background {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(43deg, #1a1a2e 0%, #16213e 46%, #0f3460 100%);
+.social-grid .up {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
 }
 
-.social-card .sc-logo {
-  position: absolute;
-  right: 50%;
-  bottom: 50%;
-  transform: translate(50%, 50%);
-  transition: all 0.6s ease-in-out;
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 3px;
+.social-grid .down {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
 }
 
-.social-card .sc-icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
+.social-grid .card1 {
+  width: 90px;
+  height: 90px;
+  outline: none;
+  border: none;
+  background: white;
+  border-radius: 90px 5px 5px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: .2s ease-in-out;
+  display: block;
 }
 
-.social-card .sc-icon .sc-svg {
-  fill: rgba(255, 255, 255, 0.797);
-  width: 100%;
-  transition: all 0.5s ease-in-out;
+.social-grid .instagram {
+  margin-top: 1.5em;
+  margin-left: 1.2em;
+  fill: #cc39a4;
+  transition: fill 0.2s ease-in-out;
 }
 
-.social-card .sc-box {
-  position: absolute;
-  padding: 10px;
-  text-align: right;
-  background: rgba(255, 255, 255, 0.08);
-  border-top: 2px solid rgba(255, 255, 255, 0.15);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
-  box-shadow: rgba(0, 0, 0, 0.35) -7px 7px 29px 0px;
-  transform-origin: bottom left;
-  transition: all 1s ease-in-out;
+.social-grid .card2 {
+  width: 90px;
+  height: 90px;
+  outline: none;
+  border: none;
+  background: white;
+  border-radius: 5px 90px 5px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: .2s ease-in-out;
+  display: block;
 }
 
-.social-card .sc-box::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  opacity: 0;
-  transition: all 0.5s ease-in-out;
+.social-grid .twitter {
+  margin-top: 1.5em;
+  margin-left: -.9em;
+  fill: #03A9F4;
+  transition: fill 0.2s ease-in-out;
 }
 
-.social-card .sc-box:hover .sc-svg {
+.social-grid .card3 {
+  width: 90px;
+  height: 90px;
+  outline: none;
+  border: none;
+  background: white;
+  border-radius: 5px 5px 5px 90px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: .2s ease-in-out;
+  display: block;
+}
+
+.social-grid .github {
+  margin-top: -.6em;
+  margin-left: 1.2em;
+  fill: #000000;
+  transition: fill 0.2s ease-in-out;
+}
+
+.social-grid .card4 {
+  width: 90px;
+  height: 90px;
+  outline: none;
+  border: none;
+  background: white;
+  border-radius: 5px 5px 90px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: .2s ease-in-out;
+  display: block;
+}
+
+.social-grid .discord {
+  margin-top: -.9em;
+  margin-left: -1.2em;
+  fill: #8c9eff;
+  transition: fill 0.2s ease-in-out;
+}
+
+.social-grid .card1:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: #cc39a4;
+}
+
+.social-grid .card1:hover .instagram {
   fill: white;
 }
 
-.social-card .sc-box1 {
-  width: 70%;
-  height: 70%;
-  bottom: -70%;
-  left: -70%;
+.social-grid .card2:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: #03A9F4;
 }
 
-.social-card .sc-box1::before {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #ff53d4 60%, #62c2fe 90%);
+.social-grid .card2:hover .twitter {
+  fill: white;
 }
 
-.social-card .sc-box1:hover::before {
+.social-grid .card3:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: black;
+}
+
+.social-grid .card3:hover .github {
+  fill: white;
+}
+
+.social-grid .card4:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: #8c9eff;
+}
+
+.social-grid .card4:hover .discord {
+  fill: white;
+}
+
+/* Project Card from Uiverse.io by Smit-Prajapati — customized for modern project showcase */
+.project-card {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 20px;
+  background: #1b233d;
+  padding: 5px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 15px 30px 0px;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.5s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-card:hover {
+  transform: scale(1.03);
+  border-color: rgba(241, 48, 36, 0.4);
+}
+
+.project-card .top-section {
+  height: 160px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card .top-section .border {
+  border-bottom-right-radius: 10px;
+  height: 30px;
+  width: 130px;
+  background: #1b233d;
+  position: relative;
+  transform: skew(-40deg);
+  box-shadow: -10px -10px 0 0 #1b233d;
+  z-index: 20;
+}
+
+.project-card .top-section .border::before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  right: -15px;
+  background: rgba(255, 255, 255, 0);
+  border-top-left-radius: 10px;
+  box-shadow: -5px -5px 0 2px #1b233d;
+}
+
+.project-card .top-section::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: rgba(255, 255, 255, 0);
+  height: 15px;
+  width: 15px;
+  border-top-left-radius: 15px;
+  box-shadow: -5px -5px 0 2px #1b233d;
+  z-index: 20;
+}
+
+.project-card .top-section .icons {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 30;
+}
+
+.project-card .top-section .icons .logo {
+  height: 100%;
+  aspect-ratio: 1;
+  padding: 7px 0 7px 15px;
+}
+
+.project-card .top-section .icons .logo .svg {
+  height: 100%;
+  fill: #ffffff;
+}
+
+.project-card .top-section .icons .social-media {
+  height: 100%;
+  padding: 8px 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.project-card .top-section .icons .social-media .svg {
+  height: 100%;
+  fill: #ffffff;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.project-card .top-section .icons .social-media .svg:hover {
+  fill: #f13024;
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Hover Overlay for project card details */
+.project-card .top-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 35, 61, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+.project-card:hover .top-section .overlay {
   opacity: 1;
 }
 
-.social-card .sc-box1:hover .sc-icon .sc-svg {
-  filter: drop-shadow(0 0 5px white);
+.project-card .top-section .overlay .desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
 }
 
-.social-card .sc-box2 {
-  width: 50%;
-  height: 50%;
-  bottom: -50%;
-  left: -50%;
-  transition-delay: 0.2s;
+.project-card .top-section .overlay .tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
 }
 
-.social-card .sc-box2::before {
-  background: radial-gradient(circle at 30% 107%, #91e9ff 0%, #00ACEE 90%);
+.project-card:hover .top-section .overlay .desc,
+.project-card:hover .top-section .overlay .tech-list {
+  transform: translateY(0);
 }
 
-.social-card .sc-box2:hover::before {
-  opacity: 1;
+.project-card .top-section .overlay .tech-badge {
+  font-size: 8px;
+  background: rgba(241, 48, 36, 0.15);
+  color: #f13024;
+  border: 1px solid rgba(241, 48, 36, 0.3);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: monospace;
 }
 
-.social-card .sc-box2:hover .sc-icon .sc-svg {
-  filter: drop-shadow(0 0 5px white);
+.project-card .bottom-section {
+  margin-top: 15px;
+  padding: 10px 5px;
 }
 
-.social-card .sc-box3 {
-  width: 30%;
-  height: 30%;
-  bottom: -30%;
-  left: -30%;
-  transition-delay: 0.4s;
+.project-card .bottom-section .title {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.social-card .sc-box3::before {
-  background: radial-gradient(circle at 30% 107%, #0072b1 0%, #00a0dc 90%);
+.project-card .bottom-section .row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
-.social-card .sc-box3:hover::before {
-  opacity: 1;
+.project-card .bottom-section .row .item {
+  flex: 30%;
+  text-align: center;
+  padding: 5px;
+  color: rgba(170, 222, 243, 0.721);
 }
 
-.social-card .sc-box3:hover .sc-icon .sc-svg {
-  filter: drop-shadow(0 0 5px white);
+.project-card .bottom-section .row .item .big-text {
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+  color: white;
 }
 
-.social-card .sc-box4 {
-  width: 10%;
-  height: 10%;
-  bottom: -10%;
-  left: -10%;
-  transition-delay: 0.6s;
+.project-card .bottom-section .row .item .regular-text {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.4);
 }
 
-.social-card:hover {
-  transform: scale(1.05);
-  border-color: rgba(241, 48, 36, 0.3);
-  box-shadow: 0 0 30px rgba(241, 48, 36, 0.15);
-}
-
-.social-card:hover .sc-box {
-  bottom: -1px;
-  left: -1px;
-}
-
-.social-card:hover .sc-logo {
-  transform: translate(70px, -52px);
-  letter-spacing: 0px;
+.project-card .bottom-section .row .item:nth-child(2) {
+  border-left: 1px solid rgba(255, 255, 255, 0.126);
+  border-right: 1px solid rgba(255, 255, 255, 0.126);
 }
 
 /* Gmail Slide Button Styles from Uiverse.io modified for accent theme */

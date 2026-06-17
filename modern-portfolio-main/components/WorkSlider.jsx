@@ -111,10 +111,32 @@ const projects = [
   },
 ];
 
+const getGithubLink = (link) => {
+  if (!link) return "https://github.com/itpRakib";
+  const cleaned = link.endsWith("/") ? link.slice(0, -1) : link;
+  const parts = cleaned.split("/");
+  const repoName = parts[parts.length - 1];
+  return `https://github.com/itpRakib/${repoName}`;
+};
+
 const WorkSlider = () => {
   return (
     <Swiper
-      spaceBetween={30}
+      spaceBetween={25}
+      breakpoints={{
+        320: {
+          slidesPerView: 1,
+        },
+        640: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+        1440: {
+          slidesPerView: 4,
+        },
+      }}
       autoplay={{
         delay: 5000,
         disableOnInteraction: false,
@@ -125,102 +147,76 @@ const WorkSlider = () => {
       }}
       navigation={true}
       modules={[Pagination, Autoplay, Navigation]}
-      className="h-[590px] md:h-[450px] lg:h-[410px] w-full"
+      className="h-[360px] w-full py-2"
     >
       {projects.map((project, i) => (
-        <SwiperSlide key={i}>
-          <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center bg-[#09090b]/80 border border-white/10 hover:border-accent/40 hover:shadow-[0_0_35px_rgba(241,48,36,0.2)] rounded-2xl p-6 lg:p-10 relative overflow-hidden backdrop-blur-md h-full select-none transition-all duration-500 group/card">
-            
-            {/* Cyber Matrix Matrix-Background decoration */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(241,48,36,0.05),transparent)] pointer-events-none" />
-            
-            {/* Image section framed as a Mac/Linux terminal window */}
-            <div className="w-full md:w-[48%] rounded-xl overflow-hidden border border-white/15 bg-black/60 relative group cursor-pointer shrink-0 shadow-2xl transition-all duration-500 group-hover/card:border-accent/30">
-              
-              {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-black/80 text-[10px] font-mono text-white/50 select-none">
-                <div className="flex items-center gap-x-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] opacity-90 shadow-[0_0_6px_#ff5f56]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] opacity-90 shadow-[0_0_6px_#ffbd2e]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] opacity-90 shadow-[0_0_6px_#27c93f]" />
+        <SwiperSlide key={i} className="h-full">
+          <div className="project-card h-full flex flex-col justify-between select-none">
+            <div
+              className="top-section"
+              style={{
+                background: `linear-gradient(180deg, rgba(27,35,61,0.2) 0%, rgba(27,35,61,0.85) 100%), url(${project.image}) center/cover no-repeat`,
+              }}
+            >
+              <div className="border"></div>
+              <div className="icons">
+                <div className="logo">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 94 94" className="svg">
+                    <path fill="white" d="M38.0481 4.82927C38.0481 2.16214 40.018 0 42.4481 0H51.2391C53.6692 0 55.6391 2.16214 55.6391 4.82927V40.1401C55.6391 48.8912 53.2343 55.6657 48.4248 60.4636C43.6153 65.2277 36.7304 67.6098 27.7701 67.6098C18.8099 67.6098 11.925 65.2953 7.11548 60.6663C2.37183 56.0036 3.8147e-06 49.2967 3.8147e-06 40.5456V4.82927C3.8147e-06 2.16213 1.96995 0 4.4 0H13.2405C15.6705 0 17.6405 2.16214 17.6405 4.82927V39.1265C17.6405 43.7892 18.4805 47.2018 20.1605 49.3642C21.8735 51.5267 24.4759 52.6079 27.9678 52.6079C31.4596 52.6079 34.0127 51.5436 35.6268 49.4149C37.241 47.2863 38.0481 43.8399 38.0481 39.0758V4.82927Z"></path>
+                    <path fill="white" d="M86.9 61.8682C86.9 64.5353 84.9301 66.6975 82.5 66.6975H73.6595C71.2295 66.6975 69.2595 64.5353 69.2595 61.8682V4.82927C69.2595 2.16214 71.2295 0 73.6595 0H82.5C84.9301 0 86.9 2.16214 86.9 4.82927V61.8682Z"></path>
+                    <path fill="white" d="M2.86102e-06 83.2195C2.86102e-06 80.5524 1.96995 78.3902 4.4 78.3902H83.6C86.0301 78.3902 88 80.5524 88 83.2195V89.1707C88 91.8379 86.0301 94 83.6 94H4.4C1.96995 94 0 91.8379 0 89.1707L2.86102e-06 83.2195Z"></path>
+                  </svg>
                 </div>
-                <span className="tracking-wider uppercase text-[9px] font-bold text-white/60">
-                  terminal // {project.host}
-                </span>
-                <span className="font-bold opacity-30 select-none">×</span>
+                <div className="social-media">
+                  <a
+                    href={getGithubLink(project.link)}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    title="View Source Code"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" className="svg">
+                      <path d="M15,3C8.373,3,3,8.373,3,15c0,5.623,3.872,10.328,9.092,11.63C12.036,26.468,12,26.28,12,26.047v-2.051 c-0.487,0-1.303,0-1.508,0c-0.821,0-1.551-0.353-1.905-1.009c-0.393-0.729-0.461-1.844-1.435-2.526 c-0.289-0.227-0.069-0.486,0.264-0.451c0.615,0.174,1.125,0.596,1.605,1.222c0.478,0.627,0.703,0.769,1.596,0.769 c0.433,0,1.081-0.025,1.691-0.121c0.328-0.833,0.895-1.6,1.588-1.962c-3.996-0.411-5.903-2.399-5.903-5.098 c0-1.162,0.495-2.286,1.336-3.233C9.053,10.647,8.706,8.73,9.435,8c1.798,0,2.885,1.166,3.146,1.481C13.477,9.174,14.461,9,15.495,9 c1.036,0,2.024,0.174,2.922,0.483C18.675,9.17,19.763,8,21.565,8c0.732,0.731,0.381,2.656,0.102,3.594 c0.836,0.945,1.328,2.066,1.328,3.226c0,2.697-1.904,4.684-5.894,5.097C18.199,20.49,19,22.1,19,23.313v2.734 c0,0.104-0.023,0.179-0.035,0.268C23.641,24.676,27,20.236,27,15C27,8.373,21.627,3,15,3z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    title="Launch Live App"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="svg">
+                      <path d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.97 7 1.96 2 6.953-7 3.992 4v-10z" />
+                    </svg>
+                  </a>
+                </div>
               </div>
-
-              {/* Mockup Image wrapper */}
-              <div className="aspect-video relative overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-all duration-700 brightness-[0.8] group-hover:brightness-[0.95]"
-                  unoptimized
-                  priority={i === 0}
-                />
-                
-                {/* Holographic glowing scanline screen filters */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 z-10" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0)_95%,rgba(241,48,36,0.12)_95%)] bg-[size:100%_6px] opacity-25 z-10 pointer-events-none group-hover:opacity-40 transition-all duration-300" />
-                <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-10 transition-opacity duration-300 z-10 pointer-events-none" />
-                
-                {/* Visual grid pattern */}
-                <div className="absolute inset-0 bg-[radial-gradient(rgba(241,48,36,0.15)_1px,transparent_1px)] bg-[size:16px_16px] opacity-20 pointer-events-none z-10" />
-                
-                <div className="absolute top-2 right-2 z-20 bg-accent/80 backdrop-blur-md border border-accent/30 text-[9px] font-mono text-white font-semibold py-0.5 px-2 rounded-md shadow-lg tracking-widest">
-                  SYS.EXE // 0{i + 1}
+              <div className="overlay">
+                <p className="desc">{project.description}</p>
+                <div className="tech-list">
+                  {project.tech.map((t, idx) => (
+                    <span key={idx} className="tech-badge">
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
-
-            {/* Text details */}
-            <div className="flex-1 flex flex-col justify-center text-left w-full z-20">
-              
-              {/* Cybersecurity terminal status bar */}
-              <div className="flex items-center gap-x-2 text-[10px] font-mono text-accent/80 border-b border-white/5 pb-2 mb-3.5">
-                <span>[ ADDR: itprakib.github.io ]</span>
-                <span className="text-white/20">•</span>
-                <span>[ PING: {project.latency} ]</span>
-                <span className="text-white/20">•</span>
-                <span className="text-green-400">ONLINE</span>
+            <div className="bottom-section flex-1 flex flex-col justify-between">
+              <span className="title">{project.title}</span>
+              <div className="row row1">
+                <div className="item">
+                  <span className="big-text">{project.tech.length}</span>
+                  <span className="regular-text">Tech Used</span>
+                </div>
+                <div className="item">
+                  <span className="big-text">{project.latency}</span>
+                  <span className="regular-text">Latency</span>
+                </div>
+                <div className="item">
+                  <span className="big-text text-green-400 font-extrabold uppercase">Online</span>
+                  <span className="regular-text">Status</span>
+                </div>
               </div>
-
-              {/* Status indicator row */}
-              <div className="flex items-center gap-x-2 mb-1">
-                <span className="text-accent text-xs uppercase tracking-[0.25em] font-extrabold text-[10px] md:text-xs">
-                  {project.category}
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
-              </div>
-              
-              <h3 className="text-2xl lg:text-3xl font-black text-white mt-0.5 mb-2.5 tracking-tight group-hover/card:text-accent transition-colors duration-300">
-                {project.title}
-              </h3>
-              
-              {/* Tech stack badges */}
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {project.tech.map((t, idx) => (
-                  <span key={idx} className="text-[10px] bg-accent/10 text-accent border border-accent/25 px-2 py-0.5 rounded font-mono font-medium tracking-wider shadow-sm">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <p className="text-sm text-white/60 mb-6 font-light leading-relaxed max-w-[450px]">
-                {project.description}
-              </p>
-              
-              <Link
-                href={project.link}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="flex items-center gap-x-2 btn rounded-full border border-white/20 bg-white/5 hover:bg-accent/20 hover:border-accent py-3 px-6 transition-all duration-300 group text-white hover:text-accent font-semibold text-sm w-fit shadow-md hover:shadow-[0_0_15px_rgba(241,48,36,0.3)] active:scale-95"
-              >
-                <span>Initialize Module</span>
-                <BsArrowRight className="group-hover:translate-x-1.5 transition-all duration-300 text-accent" />
-              </Link>
             </div>
           </div>
         </SwiperSlide>
