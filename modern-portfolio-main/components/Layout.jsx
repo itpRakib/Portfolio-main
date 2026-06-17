@@ -1,9 +1,7 @@
 import { Sora } from "next/font/google";
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
-import WelcomeScreen from "./WelcomeScreen";
 import CustomCursor from "./CustomCursor";
 import { navData } from "./Nav";
 
@@ -21,25 +19,9 @@ const sora = Sora({
 const Layout = ({ children }) => {
   const router = useRouter();
   const lastScrollTime = useRef(0);
-  const [showWelcome, setShowWelcome] = useState(false);
-
-  useEffect(() => {
-    // Only show on first browser session load
-    const isVisited = sessionStorage.getItem("welcome_visited");
-    if (!isVisited) {
-      setShowWelcome(true);
-    }
-  }, []);
-
-  const handleEnter = () => {
-    sessionStorage.setItem("welcome_visited", "true");
-    setShowWelcome(false);
-  };
 
   useEffect(() => {
     const handleWheel = (e) => {
-      // Ignore scroll inputs during welcome overlay
-      if (showWelcome) return;
 
       // Cooldown to prevent rapid scroll page-skipping
       const now = Date.now();
@@ -98,8 +80,6 @@ const Layout = ({ children }) => {
     };
 
     const handleTouchEnd = (e) => {
-      // Ignore swipe inputs during welcome overlay
-      if (showWelcome) return;
 
       if (typeof window.touchStartY === "undefined") return;
       const touchEndY = e.changedTouches[0].clientY;
@@ -158,7 +138,7 @@ const Layout = ({ children }) => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [router, showWelcome]);
+  }, [router]);
 
   return (
     <main
@@ -166,11 +146,6 @@ const Layout = ({ children }) => {
     >
       {/* Custom interactive cursor follow */}
       <CustomCursor />
-
-      {/* Welcome Screen overlay */}
-      <AnimatePresence>
-        {showWelcome && <WelcomeScreen onEnter={handleEnter} />}
-      </AnimatePresence>
 
       {/* metadata */}
       <Head>
