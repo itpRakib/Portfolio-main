@@ -1,28 +1,58 @@
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+
+const TRAIL_LENGTH = 12;
+const TRAIL_SPAWN_DISTANCE = 14;
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  // Spring settings for the outer following ring
-  const springConfig = { damping: 35, stiffness: 350, mass: 0.35 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  // Outer ring follows with a satisfying spring delay
+  const springConfig = { damping: 28, stiffness: 280, mass: 0.5 };
+  const ringX = useSpring(cursorX, springConfig);
+  const ringY = useSpring(cursorY, springConfig);
+
+  // Crosshair ring follows even more lazily for layered depth
+  const crosshairConfig = { damping: 22, stiffness: 180, mass: 0.7 };
+  const crossX = useSpring(cursorX, crosshairConfig);
+  const crossY = useSpring(cursorY, crosshairConfig);
 
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+  const [trail, setTrail] = useState([]);
+
+  const lastTrailPos = useRef({ x: -100, y: -100 });
+  const trailIdRef = useRef(0);
+  const rafRef = useRef(null);
+  const pendingPos = useRef(null);
+
+  // Throttled trail spawning via requestAnimationFrame
+  const processTrail = useCallback(() => {
+    rafRef.current = null;
+    const pos = pendingPos.current;
+    if (!pos) return;
+
+    const dx = pos.x - lastTrailPos.current.x;
+    const dy = pos.y - lastTrailPos.current.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > TRAIL_SPAWN_DISTANCE) {
+      lastTrailPos.current = { x: pos.x, y: pos.y };
+      const id = trailIdRef.current++;
+      setTrail((prev) => [...prev.slice(-(TRAIL_LENGTH - 1)), { id, x: pos.x, y: pos.y }]);
+    }
+  }, []);
 
   useEffect(() => {
-    // Check if device is a mobile or touch screen to keep native cursor
     const checkDevice = () => {
       const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
       const isSmallScreen = window.innerWidth < 1024;
       const mobile = hasCoarsePointer || isSmallScreen;
       setIsMobile(mobile);
-      
+
       if (!mobile) {
         document.body.style.cursor = "none";
       } else {
@@ -37,33 +67,34 @@ const CustomCursor = () => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
+
+      // Queue trail particle spawn
+      pendingPos.current = { x: e.clientX, y: e.clientY };
+      if (!rafRef.current) {
+        rafRef.current = requestAnimationFrame(processTrail);
+      }
     };
 
     const handleMouseDown = () => setClicked(true);
     const handleMouseUp = () => setClicked(false);
 
-    // Track when hovering interactive components
     const handleMouseOver = (e) => {
       const target = e.target;
       if (!target) return;
-      
-      const isInteractive = 
-        target.tagName === "A" || 
+
+      const isInteractive =
+        target.tagName === "A" ||
         target.tagName === "BUTTON" ||
-        target.closest("a") || 
-        target.closest("button") || 
+        target.closest("a") ||
+        target.closest("button") ||
         target.closest(".swiper-pagination-bullet") ||
         target.closest(".light-button") ||
         target.closest(".gmail-button") ||
         target.closest(".continue-application") ||
         target.closest("[role='button']") ||
         window.getComputedStyle(target).cursor === "pointer";
-        
-      if (isInteractive) {
-        setHovered(true);
-      } else {
-        setHovered(false);
-      }
+
+      setHovered(!!isInteractive);
     };
 
     window.addEventListener("mousemove", moveCursor);
@@ -78,33 +109,114 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mouseover", handleMouseOver);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [isVisible, cursorX, cursorY]);
+  }, [isVisible, cursorX, cursorY, processTrail]);
+
+  // Auto-expire trail particles
+  useEffect(() => {
+    if (trail.length === 0) return;
+    const timer = setTimeout(() => {
+      setTrail((prev) => prev.slice(1));
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [trail]);
 
   if (isMobile || !isVisible) return null;
 
   return (
     <>
-      {/* Outer follow ring (sleek glassmorphic ring that scales up on hover) */}
+      {/* Layer 1: Fading particle trail */}
+      <AnimatePresence>
+        {trail.map((p, i) => (
+          <motion.div
+            key={p.id}
+            initial={{ opacity: 0.6, scale: 1 }}
+            animate={{ opacity: 0, scale: 0.2 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="fixed top-0 left-0 pointer-events-none z-[99996]"
+            style={{
+              x: p.x,
+              y: p.y,
+              translateX: "-50%",
+              translateY: "-50%",
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: `radial-gradient(circle, rgba(241, 48, 36, ${0.5 - i * 0.03}) 0%, transparent 75%)`,
+            }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Layer 2: Rotating HUD crosshair ring (outermost, slowest follow) */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-accent/60 pointer-events-none z-[99999] mix-blend-screen"
+        className="fixed top-0 left-0 pointer-events-none z-[99997]"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          x: crossX,
+          y: crossY,
           translateX: "-50%",
           translateY: "-50%",
         }}
         animate={{
-          scale: clicked ? 0.75 : hovered ? 1.6 : 1,
-          backgroundColor: hovered ? "rgba(241, 48, 36, 0.12)" : "rgba(241, 48, 36, 0)",
-          borderColor: hovered ? "rgba(241, 48, 36, 1)" : "rgba(241, 48, 36, 0.6)",
-          boxShadow: hovered ? "0 0 15px rgba(241, 48, 36, 0.5)" : "none",
+          scale: clicked ? 0.6 : hovered ? 2 : 1,
+          opacity: hovered ? 1 : 0.5,
         }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.2 }}
-      />
-      {/* Inner precise dot */}
+        transition={{ type: "spring", damping: 20, stiffness: 250 }}
+      >
+        <svg
+          width="44"
+          height="44"
+          viewBox="0 0 44 44"
+          fill="none"
+          className="cursor-crosshair-svg"
+          style={{ display: "block" }}
+        >
+          {/* Rotating dashed orbit ring */}
+          <circle
+            cx="22"
+            cy="22"
+            r="18"
+            stroke="rgba(241, 48, 36, 0.35)"
+            strokeWidth="1"
+            strokeDasharray="4 8"
+            fill="none"
+          />
+          {/* Cardinal tick marks */}
+          <line x1="22" y1="2" x2="22" y2="7" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
+          <line x1="22" y1="37" x2="22" y2="42" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
+          <line x1="2" y1="22" x2="7" y2="22" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
+          <line x1="37" y1="22" x2="42" y2="22" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
+        </svg>
+      </motion.div>
+
+      {/* Layer 3: Outer follow ring (sleek glassmorphic ring) */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-accent pointer-events-none z-[99999] mix-blend-screen"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99998] mix-blend-screen"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: 36,
+          height: 36,
+        }}
+        animate={{
+          scale: clicked ? 0.7 : hovered ? 1.8 : 1,
+          borderWidth: hovered ? 2 : 1.5,
+          borderColor: hovered ? "rgba(241, 48, 36, 1)" : "rgba(241, 48, 36, 0.5)",
+          backgroundColor: hovered ? "rgba(241, 48, 36, 0.1)" : "rgba(241, 48, 36, 0)",
+          boxShadow: hovered
+            ? "0 0 20px rgba(241, 48, 36, 0.5), inset 0 0 10px rgba(241, 48, 36, 0.15)"
+            : "0 0 6px rgba(241, 48, 36, 0.15)",
+        }}
+        transition={{ type: "spring", damping: 22, stiffness: 300 }}
+      />
+
+      {/* Layer 4: Inner glowing core dot */}
+      <motion.div
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99999]"
         style={{
           x: cursorX,
           y: cursorY,
@@ -112,8 +224,18 @@ const CustomCursor = () => {
           translateY: "-50%",
         }}
         animate={{
-          scale: clicked ? 1.3 : hovered ? 0.3 : 1,
-          opacity: hovered ? 0.7 : 1,
+          width: clicked ? 12 : hovered ? 4 : 8,
+          height: clicked ? 12 : hovered ? 4 : 8,
+          backgroundColor: clicked
+            ? "rgba(241, 48, 36, 1)"
+            : hovered
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(241, 48, 36, 0.95)",
+          boxShadow: clicked
+            ? "0 0 24px rgba(241, 48, 36, 0.8), 0 0 48px rgba(241, 48, 36, 0.3)"
+            : hovered
+            ? "0 0 12px rgba(255, 255, 255, 0.6), 0 0 4px rgba(241, 48, 36, 0.5)"
+            : "0 0 10px rgba(241, 48, 36, 0.6), 0 0 3px rgba(241, 48, 36, 0.9)",
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
       />

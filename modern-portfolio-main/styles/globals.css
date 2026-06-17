@@ -524,3 +524,15 @@
     transform: rotate(360deg);
   }
 }
+
+/* Custom cursor crosshair rotation */
+.cursor-crosshair-svg {
+  animation: cursor-spin 8s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(241, 48, 36, 0.35));
+}
+
+@keyframes cursor-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
