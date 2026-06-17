@@ -1,12 +1,5 @@
 import { motion } from "framer-motion";
 import { BsArrowRight } from "react-icons/bs";
-import {
-  RiMailLine,
-  RiGithubLine,
-  RiLinkedinLine,
-  RiTwitterLine,
-  RiInstagramLine,
-} from "react-icons/ri";
 
 import { fadeIn } from "../../variants";
 import { useState } from "react";
@@ -86,77 +79,63 @@ const Contact = () => {
               <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">
                 Social
               </h3>
-              <div className="flex flex-wrap gap-4 justify-start items-center max-w-[240px]">
-                {/* Github */}
-                <div className="light-button">
-                  <a
-                    href="https://github.com/itpRakib"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="bt"
-                  >
-                    <div className="light-holder">
-                      <div className="dot"></div>
-                      <div className="light"></div>
-                    </div>
-                    <div className="button-holder">
-                      <RiGithubLine className="social-icon" />
-                      <span>Github</span>
-                    </div>
-                  </a>
-                </div>
-                {/* Linkedin */}
-                <div className="light-button">
-                  <a
-                    href="https://www.linkedin.com/in/md-rakibul-islam-799364327/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="bt"
-                  >
-                    <div className="light-holder">
-                      <div className="dot"></div>
-                      <div className="light"></div>
-                    </div>
-                    <div className="button-holder">
-                      <RiLinkedinLine className="social-icon" />
-                      <span>Linkedin</span>
-                    </div>
-                  </a>
-                </div>
-                {/* Twitter */}
-                <div className="light-button">
-                  <a
-                    href="https://x.com/RaKib002000"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="bt"
-                  >
-                    <div className="light-holder">
-                      <div className="dot"></div>
-                      <div className="light"></div>
-                    </div>
-                    <div className="button-holder">
-                      <RiTwitterLine className="social-icon" />
-                      <span>Twitter</span>
-                    </div>
-                  </a>
-                </div>
-                {/* Instagram */}
-                <div className="light-button">
+              <div className="flex justify-start">
+                <div className="social-card">
+                  <div className="sc-background"></div>
+                  <div className="sc-logo">Socials</div>
+
+                  {/* Instagram — box1 (largest fan) */}
                   <a
                     href="https://www.instagram.com/zero_zero_two__002?igsh=dmFtaXNtNWxleHI4"
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="bt"
                   >
-                    <div className="light-holder">
-                      <div className="dot"></div>
-                      <div className="light"></div>
+                    <div className="sc-box sc-box1">
+                      <span className="sc-icon">
+                        <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" className="sc-svg">
+                          <path d="M 9.9980469 3 C 6.1390469 3 3 6.1419531 3 10.001953 L 3 20.001953 C 3 23.860953 6.1419531 27 10.001953 27 L 20.001953 27 C 23.860953 27 27 23.858047 27 19.998047 L 27 9.9980469 C 27 6.1390469 23.858047 3 19.998047 3 L 9.9980469 3 z M 22 7 C 22.552 7 23 7.448 23 8 C 23 8.552 22.552 9 22 9 C 21.448 9 21 8.552 21 8 C 21 7.448 21.448 7 22 7 z M 15 9 C 18.309 9 21 11.691 21 15 C 21 18.309 18.309 21 15 21 C 11.691 21 9 18.309 9 15 C 9 11.691 11.691 9 15 9 z M 15 11 A 4 4 0 0 0 11 15 A 4 4 0 0 0 15 19 A 4 4 0 0 0 19 15 A 4 4 0 0 0 15 11 z"></path>
+                        </svg>
+                      </span>
                     </div>
-                    <div className="button-holder">
-                      <RiInstagramLine className="social-icon" />
-                      <span>Instagram</span>
+                  </a>
+
+                  {/* Twitter — box2 */}
+                  <a
+                    href="https://x.com/RaKib002000"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div className="sc-box sc-box2">
+                      <span className="sc-icon">
+                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" className="sc-svg">
+                          <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                        </svg>
+                      </span>
                     </div>
+                  </a>
+
+                  {/* LinkedIn — box3 */}
+                  <a
+                    href="https://www.linkedin.com/in/md-rakibul-islam-799364327/"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div className="sc-box sc-box3">
+                      <span className="sc-icon">
+                        <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" className="sc-svg">
+                          <path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.83-48.3 93.95 0 111.23 61.9 111.23 142.3V448z"></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </a>
+
+                  {/* Github corner dot — box4 */}
+                  <a
+                    href="https://github.com/itpRakib"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <div className="sc-box sc-box4"></div>
                   </a>
                 </div>
               </div>
