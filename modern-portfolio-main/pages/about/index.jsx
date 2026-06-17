@@ -326,24 +326,20 @@ const About = () => {
 
                 {/* icons if available */}
                 {item.icons && (
-                  <div className="flex gap-x-4">
+                  <div className="flex flex-wrap gap-x-5 gap-y-3">
                     {item.icons.map((iconObj, iconI) => {
                       const Icon = iconObj.Icon;
                       const name = iconObj.name;
                       return (
                         <div
                           key={iconI}
-                          className="relative group/icon text-2xl text-white transition-all duration-200 hover:text-accent hover:scale-110 cursor-pointer"
+                          className="flex flex-col items-center gap-y-1 text-white transition-all duration-200 hover:text-accent hover:scale-110 cursor-pointer"
                         >
-                          <Icon />
-                          {/* tooltip */}
+                          <Icon className="text-2xl" />
                           {name && (
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:flex flex-col items-center z-50">
-                              <span className="relative z-10 p-2 text-xs leading-none text-primary whitespace-nowrap bg-white rounded shadow-lg font-semibold">
-                                {name}
-                              </span>
-                              <div className="w-2 h-2 -mt-1 rotate-45 bg-white"></div>
-                            </div>
+                            <span className="text-[10px] leading-tight text-white/50 group-hover/icon:text-accent whitespace-nowrap font-medium tracking-wide">
+                              {name}
+                            </span>
                           )}
                         </div>
                       );
