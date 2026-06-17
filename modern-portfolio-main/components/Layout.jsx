@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import CustomCursor from "./CustomCursor";
+import ThemeSwitcher from "./ThemeSwitcher";
 import { navData } from "./Nav";
 
 import Header from "../components/Header";
@@ -146,6 +147,9 @@ const Layout = ({ children }) => {
     >
       {/* Custom interactive cursor follow */}
       <CustomCursor />
+
+      {/* Dynamic theme color switcher */}
+      <ThemeSwitcher />
 
       {/* metadata */}
       <Head>
