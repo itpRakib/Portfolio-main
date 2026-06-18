@@ -31,8 +31,7 @@ const Services = () => {
               exit="hidden"
               className="mb-4 max-w-[400px] mx-auto lg:mx-0"
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-              tempora eligendi, quisquam tempore sint reiciendis.
+              Offering end-to-end web engineering, clean system design, and performance optimizations. Focused on building high-scalability backend systems, fluid user interfaces, and robust deployment pipelines.
             </motion.p>
           </div>
 

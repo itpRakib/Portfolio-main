@@ -15,29 +15,29 @@ import "swiper/css/pagination";
 
 const serviceData = [
   {
-    Icon: RxCrop,
-    title: "Branding",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    Icon: RxDesktop,
+    title: "Web Development",
+    description: "Building fast, full-stack web applications using React, Next.js, Node.js, and Python.",
   },
   {
     Icon: RxPencil2,
-    title: "Design",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "System Design",
+    description: "Crafting clean API architectures, relational database schemas, and data pipelines.",
   },
   {
-    Icon: RxDesktop,
-    title: "Development",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-  {
-    Icon: RxReader,
-    title: "Copywriting",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    Icon: RxCrop,
+    title: "UI/UX Branding",
+    description: "Creating highly engaging responsive user interfaces and distinct digital brand identities.",
   },
   {
     Icon: RxRocket,
-    title: "SEO",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "SEO & Speed",
+    description: "Optimizing Core Web Vitals, maximizing Google PageSpeed scores, and search visibility.",
+  },
+  {
+    Icon: RxReader,
+    title: "Tech Documentation",
+    description: "Drafting clear architecture logs, API endpoints documentation, and product user guides.",
   },
 ];
 
