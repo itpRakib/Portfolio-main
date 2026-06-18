@@ -1,13 +1,13 @@
 export const fadeIn = (direction, delay) => {
   return {
     hidden: {
-      y: direction === "up" ? 80 : direction === "down" ? -80 : 0,
+      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
       opacity: 0,
-      x: direction === "left" ? 80 : direction === "right" ? -80 : 0,
+      x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
       transition: {
         type: "tween",
-        duration: 1.5,
-        delay: delay,
+        duration: 0.3,
+        delay: 0, // Exit immediately without delay to enable faster page unmounting
         ease: [0.25, 0.6, 0.3, 0.8],
       },
     },
@@ -17,7 +17,7 @@ export const fadeIn = (direction, delay) => {
       opacity: 1,
       transition: {
         type: "tween",
-        duration: 1.4,
+        duration: 0.8, // Snappier entrance animation duration
         delay: delay,
         ease: [0.25, 0.25, 0.25, 0.75],
       },

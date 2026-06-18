@@ -25,17 +25,17 @@ const Transition = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        transition={{ delay: 0.2, duration: 0.6, ease: "easeInOut" }}
+        transition={{ delay: 0.1, duration: 0.4, ease: "easeInOut" }}
         aria-hidden
       />
       <motion.div
         role="status"
-        className="fixed top-0 bottom-0 right-full w-screen h-screen z-20 bg-[#f13024]"
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-20 bg-accent"
         variants={transitionVariants}
         initial="initial"
         animate="animate"
         exit="exit"
-        transition={{ delay: 0.4, duration: 0.6, ease: "easeInOut" }}
+        transition={{ delay: 0.2, duration: 0.4, ease: "easeInOut" }}
         aria-hidden
       />
       <motion.div
@@ -45,7 +45,7 @@ const Transition = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        transition={{ delay: 0.6, duration: 0.6, ease: "easeInOut" }}
+        transition={{ delay: 0.3, duration: 0.4, ease: "easeInOut" }}
         aria-hidden
       />
     </>

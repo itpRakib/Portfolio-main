@@ -20,21 +20,37 @@ const sora = Sora({
 const Layout = ({ children }) => {
   const router = useRouter();
   const lastScrollTime = useRef(0);
+  const isNavigating = useRef(false);
+
+  // Prefetch all navigation routes on mount to ensure smooth, zero-latency route transitions
+  useEffect(() => {
+    navData.forEach((item) => {
+      router.prefetch(item.path);
+    });
+  }, [router]);
 
   useEffect(() => {
+    const handleStart = () => {
+      isNavigating.current = true;
+    };
+    const handleComplete = () => {
+      isNavigating.current = false;
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
     const handleWheel = (e) => {
+      if (isNavigating.current) return; // ignore wheel spin if route change is already in progress
 
-      // Cooldown to prevent rapid scroll page-skipping
       const now = Date.now();
-      if (now - lastScrollTime.current < 1200) return; // 1.2s cooldown matches page transition
+      if (now - lastScrollTime.current < 600) return; // 600ms cooldown matches snappier transition timings
 
-      // Ignore horizontal scrolling
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // ignore horizontal scrolling
+      if (Math.abs(e.deltaY) < 30) return; // ignore minor scroll increments & decaying inertia
 
-      // Ignore microscopic trackpad/scroll vibrations
-      if (Math.abs(e.deltaY) < 5) return;
-
-      // Check if the scroll target or its parents are scrollable and have room to scroll
+      // Check if target is inside a scrollable element
       let target = e.target;
       let isInsideScrollable = false;
 
@@ -57,18 +73,15 @@ const Layout = ({ children }) => {
 
       if (isInsideScrollable) return;
 
-      // Find current page index in navData
       const currentIndex = navData.findIndex((item) => item.path === router.pathname);
       if (currentIndex === -1) return;
 
       if (e.deltaY > 0) {
-        // Scroll Down -> Next page
         if (currentIndex < navData.length - 1) {
           lastScrollTime.current = now;
           router.push(navData[currentIndex + 1].path);
         }
       } else {
-        // Scroll Up -> Prev page
         if (currentIndex > 0) {
           lastScrollTime.current = now;
           router.push(navData[currentIndex - 1].path);
@@ -81,6 +94,7 @@ const Layout = ({ children }) => {
     };
 
     const handleTouchEnd = (e) => {
+      if (isNavigating.current) return; // ignore touch swipe if route change is already in progress
 
       if (typeof window.touchStartY === "undefined") return;
       const touchEndY = e.changedTouches[0].clientY;
@@ -89,9 +103,8 @@ const Layout = ({ children }) => {
       if (Math.abs(diffY) < 50) return; // minimum swipe distance
 
       const now = Date.now();
-      if (now - lastScrollTime.current < 1200) return;
+      if (now - lastScrollTime.current < 600) return; // 600ms cooldown matches snappier transition timings
 
-      // Check if target is inside a scrollable element
       let target = e.target;
       let isInsideScrollable = false;
 
@@ -135,6 +148,9 @@ const Layout = ({ children }) => {
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);

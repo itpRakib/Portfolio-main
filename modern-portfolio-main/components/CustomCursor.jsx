@@ -144,7 +144,7 @@ const CustomCursor = () => {
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: `radial-gradient(circle, rgba(241, 48, 36, ${0.5 - i * 0.03}) 0%, transparent 75%)`,
+              background: `radial-gradient(circle, rgba(var(--accent-color-rgb), ${0.5 - i * 0.03}) 0%, transparent 75%)`,
             }}
           />
         ))}
@@ -178,16 +178,16 @@ const CustomCursor = () => {
             cx="22"
             cy="22"
             r="18"
-            stroke="rgba(241, 48, 36, 0.35)"
+            stroke="rgba(var(--accent-color-rgb), 0.35)"
             strokeWidth="1"
             strokeDasharray="4 8"
             fill="none"
           />
           {/* Cardinal tick marks */}
-          <line x1="22" y1="2" x2="22" y2="7" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
-          <line x1="22" y1="37" x2="22" y2="42" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
-          <line x1="2" y1="22" x2="7" y2="22" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
-          <line x1="37" y1="22" x2="42" y2="22" stroke="rgba(241, 48, 36, 0.6)" strokeWidth="1" />
+          <line x1="22" y1="2" x2="22" y2="7" stroke="rgba(var(--accent-color-rgb), 0.6)" strokeWidth="1" />
+          <line x1="22" y1="37" x2="22" y2="42" stroke="rgba(var(--accent-color-rgb), 0.6)" strokeWidth="1" />
+          <line x1="2" y1="22" x2="7" y2="22" stroke="rgba(var(--accent-color-rgb), 0.6)" strokeWidth="1" />
+          <line x1="37" y1="22" x2="42" y2="22" stroke="rgba(var(--accent-color-rgb), 0.6)" strokeWidth="1" />
         </svg>
       </motion.div>
 
@@ -201,15 +201,16 @@ const CustomCursor = () => {
           translateY: "-50%",
           width: 36,
           height: 36,
+          borderWidth: hovered ? 2 : 1.5,
+          borderColor: hovered ? "rgba(var(--accent-color-rgb), 1)" : "rgba(var(--accent-color-rgb), 0.5)",
+          backgroundColor: hovered ? "rgba(var(--accent-color-rgb), 0.1)" : "rgba(var(--accent-color-rgb), 0)",
+          boxShadow: hovered
+            ? "0 0 20px rgba(var(--accent-color-rgb), 0.5), inset 0 0 10px rgba(var(--accent-color-rgb), 0.15)"
+            : "0 0 6px rgba(var(--accent-color-rgb), 0.15)",
+          transition: "border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-width 0.2s ease",
         }}
         animate={{
           scale: clicked ? 0.7 : hovered ? 1.8 : 1,
-          borderWidth: hovered ? 2 : 1.5,
-          borderColor: hovered ? "rgba(241, 48, 36, 1)" : "rgba(241, 48, 36, 0.5)",
-          backgroundColor: hovered ? "rgba(241, 48, 36, 0.1)" : "rgba(241, 48, 36, 0)",
-          boxShadow: hovered
-            ? "0 0 20px rgba(241, 48, 36, 0.5), inset 0 0 10px rgba(241, 48, 36, 0.15)"
-            : "0 0 6px rgba(241, 48, 36, 0.15)",
         }}
         transition={{ type: "spring", damping: 22, stiffness: 300 }}
       />
@@ -222,20 +223,21 @@ const CustomCursor = () => {
           y: cursorY,
           translateX: "-50%",
           translateY: "-50%",
+          backgroundColor: clicked
+            ? "rgba(var(--accent-color-rgb), 1)"
+            : hovered
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(var(--accent-color-rgb), 0.95)",
+          boxShadow: clicked
+            ? "0 0 24px rgba(var(--accent-color-rgb), 0.8), 0 0 48px rgba(var(--accent-color-rgb), 0.3)"
+            : hovered
+            ? "0 0 12px rgba(255, 255, 255, 0.6), 0 0 4px rgba(var(--accent-color-rgb), 0.5)"
+            : "0 0 10px rgba(var(--accent-color-rgb), 0.6), 0 0 3px rgba(var(--accent-color-rgb), 0.9)",
+          transition: "background-color 0.15s ease, box-shadow 0.15s ease",
         }}
         animate={{
           width: clicked ? 12 : hovered ? 4 : 8,
           height: clicked ? 12 : hovered ? 4 : 8,
-          backgroundColor: clicked
-            ? "rgba(241, 48, 36, 1)"
-            : hovered
-            ? "rgba(255, 255, 255, 0.95)"
-            : "rgba(241, 48, 36, 0.95)",
-          boxShadow: clicked
-            ? "0 0 24px rgba(241, 48, 36, 0.8), 0 0 48px rgba(241, 48, 36, 0.3)"
-            : hovered
-            ? "0 0 12px rgba(255, 255, 255, 0.6), 0 0 4px rgba(241, 48, 36, 0.5)"
-            : "0 0 10px rgba(241, 48, 36, 0.6), 0 0 3px rgba(241, 48, 36, 0.9)",
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
       />

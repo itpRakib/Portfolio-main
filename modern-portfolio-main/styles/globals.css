@@ -458,7 +458,79 @@
   transform: translateY(-50px) scale(0) rotate(120deg);
 }
 
-/* Resume continue-application button styling from Uiverse.io modified for accent theme */
+.hire-me-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--accent-color-rgb), 0.5);
+  background-color: transparent;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.1);
+  text-decoration: none;
+}
+
+.hire-me-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+  z-index: -1;
+}
+
+.hire-me-btn:hover::before {
+  left: 100%;
+}
+
+.hire-me-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+  z-index: -2;
+}
+
+.hire-me-btn:hover::after {
+  transform: scaleY(1);
+}
+
+.hire-me-btn:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 25px rgba(var(--accent-color-rgb), 0.5);
+  transform: translateY(-2px);
+}
+
+.hire-me-btn svg {
+  margin-left: 8px;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.hire-me-btn:hover svg {
+  transform: translateX(4px);
+}
+
 .continue-application {
   --color: #fff;
   --background: #121214;
@@ -1351,5 +1423,203 @@
   }
   .error-page-container .screenM {
     display: none;
+  }
+}
+
+/* Light Button Socials - Uiverse.io by kamehame-ha */
+.light-socials-container {
+  display: grid;
+  grid-template-columns: repeat(2, 90px);
+  gap: 25px 35px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+@media (min-width: 1280px) {
+  .light-socials-container {
+    justify-content: start;
+  }
+}
+
+.light-socials-container .light-button {
+  display: inline-block;
+}
+
+.light-socials-container .light-button a.bt {
+  position: relative;
+  height: 160px;
+  width: 90px;
+  display: flex;
+  align-items: flex-end;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.light-socials-container .light-button a.bt .button-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  width: 90px;
+  background-color: #0c0c12;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  font-weight: 700;
+  transition: all 300ms ease;
+  outline: rgba(255, 255, 255, 0.08) 2px solid;
+  outline-offset: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 5;
+}
+
+.light-socials-container .light-button a.bt .button-holder svg {
+  height: 36px;
+  width: 36px;
+  fill: rgba(255, 255, 255, 0.55);
+  transition: all 300ms ease;
+  margin-bottom: 4px;
+}
+
+.light-socials-container .light-button a.bt .button-holder p {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  transition: all 300ms ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.light-socials-container .light-button a.bt .light-holder {
+  position: absolute;
+  top: 0;
+  height: 160px;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.light-socials-container .light-button a.bt .light-holder .dot {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #1b1b22;
+  border-radius: 50%;
+  z-index: 2;
+  transition: all 300ms ease;
+  box-shadow: 0 0 5px transparent;
+}
+
+.light-socials-container .light-button a.bt .light-holder .light {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 160px;
+  clip-path: polygon(50% 0%, 25% 100%, 75% 100%);
+  background: transparent;
+  transition: all 300ms ease;
+  pointer-events: none;
+}
+
+.light-socials-container .light-button a.bt:hover .button-holder svg {
+  fill: var(--accent-color);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-color-rgb), 0.6));
+}
+
+.light-socials-container .light-button a.bt:hover .button-holder p {
+  color: var(--accent-color);
+}
+
+.light-socials-container .light-button a.bt:hover .button-holder {
+  color: var(--accent-color);
+  outline: var(--accent-color) 2px solid;
+  outline-offset: 2px;
+  border-color: rgba(var(--accent-color-rgb), 0.3);
+  box-shadow: 0 0 15px rgba(var(--accent-color-rgb), 0.25);
+}
+
+.light-socials-container .light-button a.bt:hover .light-holder .dot {
+  background-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+.light-socials-container .light-button a.bt:hover .light-holder .light {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--accent-color-rgb), 0.8) 0%,
+    rgba(255, 255, 255, 0) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* From Uiverse.io by alexruix - modified for dynamic accent theme loading state */
+.loader {
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  position: relative;
+}
+
+.loader:before {
+  content: '';
+  width: 48px;
+  height: 5px;
+  background: rgba(var(--accent-color-rgb, 241, 48, 36), 0.25);
+  position: absolute;
+  top: 60px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow324 0.5s linear infinite;
+}
+
+.loader:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color, #f13024);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  animation: jump7456 0.5s linear infinite;
+}
+
+@keyframes jump7456 {
+  15% {
+    border-bottom-right-radius: 3px;
+  }
+
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+
+  50% {
+    transform: translateY(18px) scale(1, .9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+@keyframes shadow324 {
+  0%, 100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.2, 1);
   }
 }
