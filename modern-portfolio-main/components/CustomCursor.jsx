@@ -68,6 +68,24 @@ const CustomCursor = () => {
       cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
 
+      // Check if hovering over an interactive element immediately on move
+      const target = e.target;
+      if (target) {
+        const isInteractive =
+          target.tagName === "A" ||
+          target.tagName === "BUTTON" ||
+          target.closest("a") ||
+          target.closest("button") ||
+          target.closest(".swiper-pagination-bullet") ||
+          target.closest(".light-button") ||
+          target.closest(".gmail-button") ||
+          target.closest(".continue-application") ||
+          target.closest("[role='button']") ||
+          target.closest(".cursor-pointer") ||
+          window.getComputedStyle(target).cursor === "pointer";
+        setHovered(!!isInteractive);
+      }
+
       // Queue trail particle spawn
       pendingPos.current = { x: e.clientX, y: e.clientY };
       if (!rafRef.current) {
@@ -92,15 +110,25 @@ const CustomCursor = () => {
         target.closest(".gmail-button") ||
         target.closest(".continue-application") ||
         target.closest("[role='button']") ||
+        target.closest(".cursor-pointer") ||
         window.getComputedStyle(target).cursor === "pointer";
 
       setHovered(!!isInteractive);
     };
 
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+    const handleWindowBlur = () => setIsVisible(false);
+    const handleWindowFocus = () => setIsVisible(true);
+
     window.addEventListener("mousemove", moveCursor);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mouseover", handleMouseOver);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowFocus);
 
     return () => {
       document.body.style.cursor = "auto";
@@ -109,6 +137,10 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowFocus);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [isVisible, cursorX, cursorY, processTrail]);

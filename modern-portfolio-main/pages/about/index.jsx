@@ -175,6 +175,18 @@ export const aboutData = [
             name: "Certificate 4",
             link: "https://www.linkedin.com/learning/certificates/12e0ecf92602ec1c09976d76ed6e805126a64f6c12f6f67db73f361196d48bc1?trk=share_certificate",
           },
+          {
+            name: "Certificate 5",
+            link: "https://lnkd.in/gMU9a5Zc",
+          },
+          {
+            name: "Certificate 6",
+            link: "https://lnkd.in/gAxe_eBV",
+          },
+          {
+            name: "Certificate 7",
+            link: "https://lnkd.in/gbymGbV4",
+          },
         ],
       },
     ],
