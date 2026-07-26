@@ -20,6 +20,16 @@ const projects = [
     latency: "12ms"
   },
   {
+    title: "BD GoTicket",
+    category: "Full-Stack Web App",
+    tech: ["Next.js", "Tailwind CSS", "Vercel", "Node.js"],
+    description: "Bangladesh's next-gen multi-modal transit reservation hub. Book Bus, Train, and Flight tickets with NID verification, bKash/Nagad checkout, and real-time route optimization.",
+    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=800&auto=format&fit=crop",
+    link: "https://online-ticket-reservation-system-beta.vercel.app/",
+    host: "transit_matrix.sys",
+    latency: "24ms"
+  },
+  {
     title: "Weather App",
     category: "Web Application",
     tech: ["HTML5", "CSS3", "JavaScript", "OpenWeather API"],

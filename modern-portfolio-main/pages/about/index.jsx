@@ -82,6 +82,24 @@ export const aboutData = [
     title: "achievements",
     info: [
       {
+        title: "Forage",
+        logo: "https://www.theforage.com/favicon.ico",
+        certificates: [
+          {
+            name: "Certificate 1",
+            link: "https://lnkd.in/gMU9a5Zc",
+          },
+          {
+            name: "Certificate 2",
+            link: "https://lnkd.in/gAxe_eBV",
+          },
+          {
+            name: "Certificate 3",
+            link: "https://lnkd.in/gbymGbV4",
+          },
+        ],
+      },
+      {
         title: "IBM",
         logo: "https://www.ibm.com/favicon.ico",
         certificates: [

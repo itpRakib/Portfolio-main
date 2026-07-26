@@ -1,20 +1,20 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
-const TRAIL_LENGTH = 12;
-const TRAIL_SPAWN_DISTANCE = 14;
+const TRAIL_LENGTH = 16;
+const TRAIL_SPAWN_DISTANCE = 8;
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
   // Outer ring follows with a satisfying spring delay
-  const springConfig = { damping: 28, stiffness: 280, mass: 0.5 };
+  const springConfig = { damping: 32, stiffness: 400, mass: 0.35 };
   const ringX = useSpring(cursorX, springConfig);
   const ringY = useSpring(cursorY, springConfig);
 
   // Crosshair ring follows even more lazily for layered depth
-  const crosshairConfig = { damping: 22, stiffness: 180, mass: 0.7 };
+  const crosshairConfig = { damping: 26, stiffness: 300, mass: 0.45 };
   const crossX = useSpring(cursorX, crosshairConfig);
   const crossY = useSpring(cursorY, crosshairConfig);
 
@@ -131,18 +131,18 @@ const CustomCursor = () => {
         {trail.map((p, i) => (
           <motion.div
             key={p.id}
-            initial={{ opacity: 0.6, scale: 1 }}
+            initial={{ opacity: 0.7, scale: 1.2 }}
             animate={{ opacity: 0, scale: 0.2 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="fixed top-0 left-0 pointer-events-none z-[99996]"
             style={{
               x: p.x,
               y: p.y,
               translateX: "-50%",
               translateY: "-50%",
-              width: 6,
-              height: 6,
+              width: 5,
+              height: 5,
               borderRadius: "50%",
               background: `radial-gradient(circle, rgba(var(--accent-color-rgb), ${0.5 - i * 0.03}) 0%, transparent 75%)`,
             }}
@@ -236,8 +236,8 @@ const CustomCursor = () => {
           transition: "background-color 0.15s ease, box-shadow 0.15s ease",
         }}
         animate={{
-          width: clicked ? 12 : hovered ? 4 : 8,
-          height: clicked ? 12 : hovered ? 4 : 8,
+          width: clicked ? 12 : hovered ? 4 : 6,
+          height: clicked ? 12 : hovered ? 4 : 6,
         }}
         transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
       />
