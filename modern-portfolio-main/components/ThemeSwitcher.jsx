@@ -32,6 +32,7 @@ const ThemeSwitcher = () => {
     localStorage.setItem("portfolio-theme", theme.name);
     document.documentElement.style.setProperty("--accent-color", theme.hex);
     document.documentElement.style.setProperty("--accent-color-rgb", theme.rgb);
+    setIsOpen(false); // Close the popup drawer after selecting a color
 
     // Trigger ripple animation from the click coordinates
     if (e) {
