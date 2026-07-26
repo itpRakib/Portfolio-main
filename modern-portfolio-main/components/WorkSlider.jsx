@@ -165,6 +165,8 @@ const WorkSlider = () => {
           swiperRef.current = swiper;
         }}
         spaceBetween={25}
+        speed={1500}
+        loop={true}
         breakpoints={{
           320: {
             slidesPerView: 1,
@@ -180,7 +182,7 @@ const WorkSlider = () => {
           },
         }}
         autoplay={{
-          delay: 3000,
+          delay: 3500,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
