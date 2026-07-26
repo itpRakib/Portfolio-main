@@ -83,7 +83,7 @@ export const aboutData = [
     info: [
       {
         title: "Forage",
-        logo: "https://www.theforage.com/favicon.ico",
+        logo: "/forage-logo.png",
         certificates: [
           {
             name: "Certificate 1",
