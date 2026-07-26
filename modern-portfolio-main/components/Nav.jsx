@@ -37,6 +37,7 @@ const Nav = () => {
             } relative flex items-center group hover:text-accent transition-all duration-300`}
             href={link.path}
             key={i}
+            aria-label={link.name}
           >
             {/* tolltip */}
             <div

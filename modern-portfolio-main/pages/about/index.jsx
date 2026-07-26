@@ -310,23 +310,24 @@ const About = () => {
           exit="hidden"
           className="flex flex-col w-full xl:max-w-[48%] h-[480px]"
         >
-          <div className="flex gap-x-4 xl:gap-x-8 mx-auto xl:mx-0 mb-4">
+          <div className="flex gap-x-4 xl:gap-x-8 mx-auto xl:mx-0 mb-4 z-20 relative">
             {aboutData.map((item, itemI) => (
-              <div
+              <button
+                type="button"
                 key={itemI}
                 className={`${
                   index === itemI &&
                   "text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300"
-                } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-white after:absolute after:-bottom-1 after:left-0`}
+                } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-white after:absolute after:-bottom-1 after:left-0 focus:outline-none bg-transparent border-0 p-0 text-left`}
                 onClick={() => setIndex(itemI)}
               >
                 {item.title}
-              </div>
+              </button>
             ))}
           </div>
 
           <div className="py-2 xl:py-6 flex flex-col gap-y-4 items-center xl:items-start overflow-y-auto max-h-[340px] w-full pr-2 scrollbar-thin scrollbar-thumb-accent/20 scrollbar-track-white/5">
-            {aboutData[index].info.map((item, itemI) => (
+            {aboutData[index]?.info?.map((item, itemI) => (
               <div
                 key={itemI}
                 className="flex flex-col md:flex-row items-center text-center md:text-left text-white/60 gap-y-2 md:gap-y-0 md:gap-x-4 w-full justify-start py-1"
@@ -359,14 +360,18 @@ const About = () => {
                 {item.icons && (
                   <div className="flex flex-wrap gap-x-5 gap-y-3">
                     {item.icons.map((iconObj, iconI) => {
-                      const Icon = iconObj.Icon;
-                      const name = iconObj.name;
+                      const Icon = iconObj?.Icon || iconObj;
+                      const name = iconObj?.name;
                       return (
                         <div
                           key={iconI}
                           className="flex flex-col items-center gap-y-1 text-white transition-all duration-200 hover:text-accent hover:scale-110 cursor-pointer"
                         >
-                          <Icon className="text-2xl" />
+                          {Icon && typeof Icon === 'function' ? (
+                            <Icon className="text-2xl" />
+                          ) : (
+                            <div className="w-6 h-6 bg-white/10 rounded" />
+                          )}
                           {name && (
                             <span className="text-[10px] leading-tight text-white/50 group-hover/icon:text-accent whitespace-nowrap font-medium tracking-wide">
                               {name}
