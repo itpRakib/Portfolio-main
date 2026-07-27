@@ -3,6 +3,7 @@ import { BsArrowRight } from "react-icons/bs";
 
 import { fadeIn } from "../../variants";
 import { useState } from "react";
+import AnimatedInput from "../../components/AnimatedInput";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -207,45 +208,34 @@ const Contact = () => {
                 <div className="flex flex-col xl:flex-row gap-4 w-full">
                   <input type="hidden" name="form-name" value="contact" />
 
-                  <input
+                  <AnimatedInput
                     type="text"
                     name="name"
-                    placeholder="Name"
-                    className="input w-full"
+                    label="Name"
                     disabled={isLoading}
-                    aria-disabled={isLoading}
                     required
-                    aria-required
                   />
-                  <input
+                  <AnimatedInput
                     type="email"
                     name="email"
-                    placeholder="E-mail"
-                    className="input w-full"
+                    label="E-mail"
                     disabled={isLoading}
-                    aria-disabled={isLoading}
                     required
-                    aria-required
                   />
                 </div>
-                <input
+                <AnimatedInput
                   type="text"
                   name="subject"
-                  placeholder="Subject"
-                  className="input"
+                  label="Subject"
                   disabled={isLoading}
-                  aria-disabled={isLoading}
                   required
-                  aria-required
                 />
-                <textarea
+                <AnimatedInput
+                  isTextArea
                   name="message"
-                  placeholder="Message..."
-                  className="textarea"
+                  label="Message..."
                   disabled={isLoading}
-                  aria-disabled={isLoading}
                   required
-                  aria-required
                 />
                 <button
                   type="submit"
