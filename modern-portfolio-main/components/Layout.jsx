@@ -180,6 +180,7 @@ const Layout = ({ children }) => {
         />
         <meta name="author" content="Rakibul Islam" />
         <meta name="theme-color" content="#f13024" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
       </Head>
 
       <TopLeftImg />

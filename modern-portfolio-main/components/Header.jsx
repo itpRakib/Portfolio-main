@@ -8,21 +8,15 @@ const Header = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
           {/* logo */}
           <Link href="/" className="flex items-center gap-x-3 group relative select-none">
-            {/* Mascot Image Logo */}
-            <div className="w-[50px] h-[50px] flex items-center justify-center overflow-visible relative group/logo">
-              <div 
-                className="w-full h-full rounded-xl overflow-hidden border bg-[#0c0c14] flex items-center justify-center logo-mascot-container"
-                style={{
-                  borderColor: `rgba(var(--accent-color-rgb), 0.3)`,
-                  boxShadow: `0 0 15px rgba(var(--accent-color-rgb), 0.25)`,
-                }}
-              >
-                <img 
-                  src="/logo.png" 
-                  alt="Rakibul Islam Mascot Logo"
-                  className="w-[80%] h-[80%] object-contain logo-mascot-img"
-                />
-              </div>
+            {/* Custom Logo Icon */}
+            <div className="w-[42px] h-[42px] flex items-center justify-center relative transition-transform duration-300 group-hover:scale-110">
+              <img
+                src="/logo-icon.png"
+                alt="Logo"
+                width={42}
+                height={42}
+                className="object-contain transition-all duration-300 filter drop-shadow(0 0 2px rgba(255,255,255,0.15)) group-hover:drop-shadow-[0_0_8px_rgba(var(--accent-color-rgb),0.85)]"
+              />
             </div>
 
             {/* Logo Text */}
