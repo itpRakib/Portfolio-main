@@ -8,12 +8,14 @@ const Header = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
           {/* logo */}
           <Link href="/" className="flex items-center gap-x-3 group relative select-none">
-            <div className="w-[48px] h-[48px] flex items-center justify-center overflow-visible relative">
-              <img
-                src="/logo-icon.svg"
-                alt="Rakibul Islam Portfolio Logo"
-                className="w-full h-full object-contain transition-all duration-500 ease-out group-hover:rotate-[360deg] group-hover:scale-110 filter drop-shadow-[0_0_8px_rgba(0,110,182,0.4)] group-hover:drop-shadow-[0_0_15px_rgba(0,110,182,0.8)]"
-              />
+            {/* Animated Ring Spinner Logo */}
+            <div className="w-[45px] h-[45px] flex items-center justify-center overflow-visible relative transition-transform duration-300 group-hover:scale-110">
+              <svg className="pl" width="240" height="240" viewBox="0 0 240 240" style={{ width: "100%", height: "100%", display: "block" }}>
+                <circle className="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" strokeWidth="20" strokeDasharray="0 660" strokeDashoffset="-330" strokeLinecap="round"></circle>
+                <circle className="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" strokeWidth="20" strokeDasharray="0 220" strokeDashoffset="-110" strokeLinecap="round"></circle>
+                <circle className="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" strokeWidth="20" strokeDasharray="0 440" strokeLinecap="round"></circle>
+                <circle className="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" strokeWidth="20" strokeDasharray="0 440" strokeLinecap="round"></circle>
+              </svg>
             </div>
 
             {/* Logo Text */}
