@@ -8,14 +8,21 @@ const Header = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
           {/* logo */}
           <Link href="/" className="flex items-center gap-x-3 group relative select-none">
-            {/* Animated Ring Spinner Logo */}
-            <div className="w-[45px] h-[45px] flex items-center justify-center overflow-visible relative">
-              <svg className="pl" width="240" height="240" viewBox="0 0 240 240" style={{ width: "100%", height: "100%", display: "block" }}>
-                <circle className="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" strokeWidth="20" strokeDasharray="0 660" strokeDashoffset="-330" strokeLinecap="round"></circle>
-                <circle className="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" strokeWidth="20" strokeDasharray="0 220" strokeDashoffset="-110" strokeLinecap="round"></circle>
-                <circle className="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" strokeWidth="20" strokeDasharray="0 440" strokeLinecap="round"></circle>
-                <circle className="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" strokeWidth="20" strokeDasharray="0 440" strokeLinecap="round"></circle>
-              </svg>
+            {/* Mascot Image Logo */}
+            <div className="w-[50px] h-[50px] flex items-center justify-center overflow-visible relative group/logo">
+              <div 
+                className="w-full h-full rounded-xl overflow-hidden border bg-[#0c0c14] flex items-center justify-center logo-mascot-container"
+                style={{
+                  borderColor: `rgba(var(--accent-color-rgb), 0.3)`,
+                  boxShadow: `0 0 15px rgba(var(--accent-color-rgb), 0.25)`,
+                }}
+              >
+                <img 
+                  src="/logo.png" 
+                  alt="Rakibul Islam Mascot Logo"
+                  className="w-[80%] h-[80%] object-contain logo-mascot-img"
+                />
+              </div>
             </div>
 
             {/* Logo Text */}
