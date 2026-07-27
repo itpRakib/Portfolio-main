@@ -20,9 +20,7 @@ const Header = () => {
 
             {/* Logo Text */}
             <span className="text-[20px] md:text-[24px] font-semibold tracking-wider text-white transition-all duration-300 ml-1">
-              Rakibul <span className="font-light text-white/90">Islam</span>
-              <span className="text-accent font-light mx-2">|</span>
-              <span className="text-accent font-light group-hover:text-white transition-colors duration-300">portfolio</span>
+              rakibul <span className="font-light text-white/90">islam</span><span className="text-accent font-bold">.</span>
             </span>
           </Link>
 

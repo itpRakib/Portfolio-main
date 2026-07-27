@@ -169,7 +169,7 @@ const Layout = ({ children }) => {
 
       {/* metadata */}
       <Head>
-        <title>Rakibul Islam | Portfolio</title>
+        <title>rakibul islam.</title>
         <meta
           name="description"
           content="Rakibul Islam is a Full-stack web developer."
