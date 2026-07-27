@@ -8,20 +8,19 @@ const Header = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
           {/* logo */}
           <Link href="/" className="flex items-center gap-x-3 group relative select-none">
-            {/* Custom Logo Icon */}
-            <div className="w-[42px] h-[42px] flex items-center justify-center relative transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[15deg]">
+            <div className="w-[48px] h-[48px] flex items-center justify-center overflow-visible relative">
               <img
-                src="/logo-icon.png"
-                alt="Logo"
-                width={42}
-                height={42}
-                className="object-contain transition-all duration-300 filter drop-shadow(0 0 2px rgba(255,255,255,0.15)) group-hover:drop-shadow-[0_0_12px_rgba(var(--accent-color-rgb),0.95)]"
+                src="/logo-icon.svg"
+                alt="Rakibul Islam Portfolio Logo"
+                className="w-full h-full object-contain transition-all duration-500 ease-out group-hover:rotate-[360deg] group-hover:scale-110 filter drop-shadow-[0_0_8px_rgba(0,110,182,0.4)] group-hover:drop-shadow-[0_0_15px_rgba(0,110,182,0.8)]"
               />
             </div>
 
             {/* Logo Text */}
-            <span className="text-[28px] font-semibold tracking-wider text-white group-hover:text-accent transition-all duration-300 ml-1">
-              rakibul <span className="font-light text-white">islam</span><span className="text-accent font-bold">.</span>
+            <span className="text-[20px] md:text-[24px] font-semibold tracking-wider text-white transition-all duration-300 ml-1">
+              Rakibul <span className="font-light text-white/90">Islam</span>
+              <span className="text-accent font-light mx-2">|</span>
+              <span className="text-accent font-light group-hover:text-white transition-colors duration-300">portfolio</span>
             </span>
           </Link>
 
