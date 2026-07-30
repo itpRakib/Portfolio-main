@@ -1,4 +1,5 @@
 # dependencies
+node_modules/
 modern-portfolio-main/node_modules/
 modern-portfolio-main/.pnp
 modern-portfolio-main/.pnp.js
@@ -22,7 +23,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+.env
 .env*.local
+*.env
 
 # vercel
 .vercel
