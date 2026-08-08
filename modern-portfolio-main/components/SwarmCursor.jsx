@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Renderer, Program, Mesh, Geometry, Triangle, RenderTarget } from 'ogl';
-
-import './SwarmCursor.css';
+import { Renderer, Program, Mesh, Geometry, Triangle, RenderTarget } from '../lib/ogl';
 
 const FIELD_VERT = `
 precision highp float;
@@ -183,16 +181,9 @@ const SwarmCursor = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let renderer;
-    try {
-      renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio || 1, 1.75) });
-    } catch (e) {
-      console.warn('WebGL Renderer initialization failed', e);
-      return;
-    }
-
+    const renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio || 1, 1.75) });
     const gl = renderer.gl;
     if (!gl) return;
 
@@ -255,12 +246,12 @@ const SwarmCursor = ({
     let cssH = 1;
 
     const resize = () => {
-      cssW = container.clientWidth || 1;
-      cssH = container.clientHeight || 1;
+      cssW = container.clientWidth || window.innerWidth || 1;
+      cssH = container.clientHeight || window.innerHeight || 1;
       renderer.setSize(cssW, cssH);
       fieldProgram.uniforms.uRes.value = [cssW, cssH];
-      const w = Math.max(1, Math.round(gl.drawingBufferWidth));
-      const h = Math.max(1, Math.round(gl.drawingBufferHeight));
+      const w = Math.max(1, Math.round(gl.drawingBufferWidth || cssW));
+      const h = Math.max(1, Math.round(gl.drawingBufferHeight || cssH));
       target = new RenderTarget(gl, { width: w, height: h, depth: false });
     };
     const ro = new ResizeObserver(resize);
@@ -343,12 +334,12 @@ const SwarmCursor = ({
       burst = 1;
     };
 
-    // Listen on global window as well as container for responsive cursor tracking
-    window.addEventListener('pointermove', onMove, { passive: true });
     container.addEventListener('pointermove', onMove, { passive: true });
     container.addEventListener('pointerenter', onMove, { passive: true });
     container.addEventListener('pointerleave', onLeave);
-    window.addEventListener('pointerdown', onDown);
+    container.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
 
     let raf = 0;
     let last = performance.now();
@@ -570,10 +561,11 @@ const SwarmCursor = ({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      window.removeEventListener('pointermove', onMove);
       container.removeEventListener('pointermove', onMove);
       container.removeEventListener('pointerenter', onMove);
       container.removeEventListener('pointerleave', onLeave);
+      container.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerdown', onDown);
       if (gl.canvas && gl.canvas.parentElement === container) container.removeChild(gl.canvas);
       const lose = gl.getExtension('WEBGL_lose_context');

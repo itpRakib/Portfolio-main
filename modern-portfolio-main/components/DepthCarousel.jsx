@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { RiExternalLinkLine, RiGithubLine } from 'react-icons/ri';
-import './DepthCarousel.css';
+import gsap from '../lib/gsap';
 
 const DEFAULT_ITEMS = [
-  { image: 'https://picsum.photos/seed/depth1/800/1000', alt: 'Slide 1' },
-  { image: 'https://picsum.photos/seed/depth2/800/1000', alt: 'Slide 2' },
-  { image: 'https://picsum.photos/seed/depth3/800/1000', alt: 'Slide 3' },
-  { image: 'https://picsum.photos/seed/depth4/800/1000', alt: 'Slide 4' },
-  { image: 'https://picsum.photos/seed/depth5/800/1000', alt: 'Slide 5' },
-  { image: 'https://picsum.photos/seed/depth6/800/1000', alt: 'Slide 6' }
+  { image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop', alt: 'Slide 1' },
+  { image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=800&auto=format&fit=crop', alt: 'Slide 2' },
+  { image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=800&auto=format&fit=crop', alt: 'Slide 3' },
+  { image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=800&auto=format&fit=crop', alt: 'Slide 4' },
+  { image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop', alt: 'Slide 5' }
 ];
 
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
@@ -17,8 +14,8 @@ const normalizeItem = it => (typeof it === 'string' ? { image: it, alt: '' } : i
 
 const DepthCarousel = ({
   items = DEFAULT_ITEMS,
-  cardWidth = 320,
-  cardHeight = 420,
+  cardWidth = 300,
+  cardHeight = 380,
   radius = 18,
   tint = '#05060a',
   depth = 220,
@@ -359,7 +356,7 @@ const DepthCarousel = ({
         {data.map((item, i) => (
           <div
             key={i}
-            className="depth-carousel__card"
+            className="depth-carousel__card group"
             ref={el => (cardRefs.current[i] = el)}
             style={{ width: cardWidth, height: cardHeight, borderRadius: radius }}
             aria-roledescription="slide"
@@ -373,43 +370,75 @@ const DepthCarousel = ({
               ref={el => (overlayRefs.current[i] = el)}
               style={{ background: tint }}
             />
+
             {item.title && (
-              <div className="depth-carousel__overlay">
-                {item.category && <span className="depth-carousel__badge">{item.category}</span>}
-                <div className="depth-carousel__info">
-                  <h3 className="depth-carousel__title">{item.title}</h3>
-                  {item.description && <p className="depth-carousel__desc">{item.description}</p>}
+              <div className="depth-carousel__content-overlay absolute inset-0 flex flex-col justify-between p-5 z-20 pointer-events-none text-white">
+                <div className="flex items-center justify-between">
+                  {item.category && (
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-accent/90 text-white backdrop-blur-md border border-white/10 shadow-md">
+                      {item.category}
+                    </span>
+                  )}
+                  {item.latency && (
+                    <span className="text-[11px] font-mono text-white/80 bg-black/50 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
+                      {item.latency}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-4 -mx-5 -mb-5 rounded-b-[18px]">
+                  <h3 className="text-lg font-bold text-white tracking-wide drop-shadow-md">
+                    {item.title}
+                  </h3>
+                  {item.description && (
+                    <p className="text-xs text-white/70 line-clamp-2 leading-relaxed font-light">
+                      {item.description}
+                    </p>
+                  )}
                   {item.tech && item.tech.length > 0 && (
-                    <div className="depth-carousel__tech-stack">
-                      {item.tech.slice(0, 4).map((t, tidx) => (
-                        <span key={tidx} className="depth-carousel__tech-item">
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {item.tech.slice(0, 3).map((t, idx) => (
+                        <span key={idx} className="text-[10px] font-mono text-white/90 bg-white/10 px-2 py-0.5 rounded border border-white/10">
                           {t}
                         </span>
                       ))}
+                      {item.tech.length > 3 && (
+                        <span className="text-[10px] font-mono text-white/60 bg-white/5 px-1.5 py-0.5 rounded">
+                          +{item.tech.length - 3}
+                        </span>
+                      )}
                     </div>
                   )}
-                  <div className="depth-carousel__actions" onClick={e => e.stopPropagation()}>
-                    {item.link && (
+                  {item.link && (
+                    <div className="flex items-center gap-2 mt-2 pointer-events-auto">
                       <a
                         href={item.link}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="depth-carousel__btn depth-carousel__btn--primary"
+                        className="flex-1 text-center text-xs font-semibold py-2 px-3 rounded-lg bg-accent text-white hover:bg-accent/85 transition-colors shadow-lg flex items-center justify-center gap-1.5"
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        Live Demo <RiExternalLinkLine className="w-3.5 h-3.5" />
+                        <span>Launch App</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                       </a>
-                    )}
-                    {item.github && (
-                      <a
-                        href={item.github}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="depth-carousel__btn depth-carousel__btn--secondary"
-                      >
-                        Code <RiGithubLine className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                  </div>
+                      {item.githubLink && (
+                        <a
+                          href={item.githubLink}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10"
+                          title="View Source Code"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

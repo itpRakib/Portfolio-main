@@ -7,13 +7,12 @@ import CustomCursor from "./CustomCursor";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { navData } from "./Nav";
 
+const SwarmCursor = dynamic(() => import("./SwarmCursor"), { ssr: false });
+
+
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import TopLeftImg from "../components/TopLeftImg";
-
-const SwarmCursor = dynamic(() => import("./SwarmCursor"), {
-  ssr: false,
-});
 
 // setup font
 const sora = Sora({
@@ -166,18 +165,18 @@ const Layout = ({ children }) => {
     <main
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
     >
-      {/* Interactive WebGL particle swarm background */}
-      <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+      {/* Interactive WebGL SwarmCursor background particle effect */}
+      <div className="fixed inset-0 pointer-events-none z-[1]">
         <SwarmCursor
-          color="#f13024"
-          accentColor="#ffffff"
-          count={12}
-          size={8}
+          color="#ffffff"
+          accentColor="var(--accent-color, #f13024)"
+          count={14}
+          size={10}
           speed={2.5}
           spread={100}
           wander={0.25}
           trail={0.75}
-          scatterOnClick
+          scatterOnClick={true}
         />
       </div>
 

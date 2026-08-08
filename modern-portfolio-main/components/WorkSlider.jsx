@@ -1,34 +1,16 @@
-import { useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
-import { Pagination, Autoplay, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState } from "react";
+import DepthCarousel from "./DepthCarousel";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
-const projects = [
+export const projects = [
   {
     title: "Media Collector",
     category: "Full-Stack Web App",
-    tech: ["React", "Next.js", "Tailwind CSS", "Vercel"],
-    description: "A comprehensive media collection management app to discover, track, organize, and manage media content seamlessly with real-time UI interactivity.",
-    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop",
+    tech: ["Next.js", "Tailwind CSS", "React", "Vercel"],
+    description: "A modern media archiving and discovery platform for curated digital collections, media indexing, and interactive asset showcases.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop",
     link: "https://media-collector-amber.vercel.app/",
     host: "media_collector.sys",
     latency: "16ms"
-  },
-  {
-    title: "Wikipedia Clone",
-    category: "Web Application",
-    tech: ["HTML5", "CSS3", "JavaScript", "Wikipedia API"],
-    description: "A clean, responsive search client utilizing the Wikipedia API to fetch summaries, articles, and media formats with instant typeahead suggestions.",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=800&auto=format&fit=crop",
-    link: "https://itprakib.github.io/Wikipedia/",
-    host: "wikipedia_mirror.sys",
-    latency: "12ms"
   },
   {
     title: "BD GoTicket",
@@ -39,6 +21,16 @@ const projects = [
     link: "https://online-ticket-reservation-system-beta.vercel.app/",
     host: "transit_matrix.sys",
     latency: "24ms"
+  },
+  {
+    title: "Wikipedia Clone",
+    category: "Web Application",
+    tech: ["HTML5", "CSS3", "JavaScript", "Wikipedia API"],
+    description: "A clean, responsive search client utilizing the Wikipedia API to fetch summaries, articles, and media formats with instant typeahead suggestions.",
+    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=800&auto=format&fit=crop",
+    link: "https://itprakib.github.io/Wikipedia/",
+    host: "wikipedia_mirror.sys",
+    latency: "12ms"
   },
   {
     title: "Weather App",
@@ -142,9 +134,7 @@ const projects = [
   },
 ];
 
-export { projects };
-
-const getGithubLink = (link) => {
+export const getGithubLink = (link) => {
   if (!link) return "https://github.com/itpRakib";
   if (link.includes("media-collector-amber.vercel.app")) {
     return "https://github.com/itpRakib/media-collector";
@@ -159,128 +149,90 @@ const getGithubLink = (link) => {
 };
 
 const WorkSlider = () => {
-  const swiperRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const carouselItems = projects.map((proj) => ({
+    ...proj,
+    githubLink: getGithubLink(proj.link),
+    alt: proj.title,
+  }));
+
+  const activeProject = projects[activeIndex] || projects[0];
 
   return (
-    <div
-      onMouseEnter={() => {
-        if (swiperRef.current?.autoplay) {
-          swiperRef.current.autoplay.stop();
-        }
-      }}
-      onMouseLeave={() => {
-        if (swiperRef.current?.autoplay) {
-          swiperRef.current.autoplay.start();
-        }
-      }}
-      className="w-full h-[360px] py-2"
-    >
-      <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        spaceBetween={25}
-        speed={1500}
-        loop={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-          },
-          640: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-          1440: {
-            slidesPerView: 4,
-          },
-        }}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Pagination, Autoplay, Navigation]}
-        className="h-full w-full"
-      >
-        {projects.map((project, i) => (
-          <SwiperSlide key={i} className="h-full">
-            <div className="project-card h-full flex flex-col justify-between select-none">
-              <div
-                className="top-section"
-                style={{
-                  background: `linear-gradient(180deg, rgba(27,35,61,0.2) 0%, rgba(27,35,61,0.85) 100%), url(${project.image}) center/cover no-repeat`,
-                }}
-              >
-                <div className="border"></div>
-                <div className="icons">
-                  <div className="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 94 94" className="svg">
-                      <path fill="white" d="M38.0481 4.82927C38.0481 2.16214 40.018 0 42.4481 0H51.2391C53.6692 0 55.6391 2.16214 55.6391 4.82927V40.1401C55.6391 48.8912 53.2343 55.6657 48.4248 60.4636C43.6153 65.2277 36.7304 67.6098 27.7701 67.6098C18.8099 67.6098 11.925 65.2953 7.11548 60.6663C2.37183 56.0036 3.8147e-06 49.2967 3.8147e-06 40.5456V4.82927C3.8147e-06 2.16213 1.96995 0 4.4 0H13.2405C15.6705 0 17.6405 2.16214 17.6405 4.82927V39.1265C17.6405 43.7892 18.4805 47.2018 20.1605 49.3642C21.8735 51.5267 24.4759 52.6079 27.9678 52.6079C31.4596 52.6079 34.0127 51.5436 35.6268 49.4149C37.241 47.2863 38.0481 43.8399 38.0481 39.0758V4.82927Z"></path>
-                      <path fill="white" d="M86.9 61.8682C86.9 64.5353 84.9301 66.6975 82.5 66.6975H73.6595C71.2295 66.6975 69.2595 64.5353 69.2595 61.8682V4.82927C69.2595 2.16214 71.2295 0 73.6595 0H82.5C84.9301 0 86.9 2.16214 86.9 4.82927V61.8682Z"></path>
-                      <path fill="white" d="M2.86102e-06 83.2195C2.86102e-06 80.5524 1.96995 78.3902 4.4 78.3902H83.6C86.0301 78.3902 88 80.5524 88 83.2195V89.1707C88 91.8379 86.0301 94 83.6 94H4.4C1.96995 94 0 91.8379 0 89.1707L2.86102e-06 83.2195Z"></path>
-                    </svg>
-                  </div>
-                  <div className="social-media">
-                    <a
-                      href={getGithubLink(project.link)}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="View Source Code"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" className="svg">
-                        <path d="M15,3C8.373,3,3,8.373,3,15c0,5.623,3.872,10.328,9.092,11.63C12.036,26.468,12,26.28,12,26.047v-2.051 c-0.487,0-1.303,0-1.508,0c-0.821,0-1.551-0.353-1.905-1.009c-0.393-0.729-0.461-1.844-1.435-2.526 c-0.289-0.227-0.069-0.486,0.264-0.451c0.615,0.174,1.125,0.596,1.605,1.222c0.478,0.627,0.703,0.769,1.596,0.769 c0.433,0,1.081-0.025,1.691-0.121c0.328-0.833,0.895-1.6,1.588-1.962c-3.996-0.411-5.903-2.399-5.903-5.098 c0-1.162,0.495-2.286,1.336-3.233C9.053,10.647,8.706,8.73,9.435,8c1.798,0,2.885,1.166,3.146,1.481C13.477,9.174,14.461,9,15.495,9 c1.036,0,2.024,0.174,2.922,0.483C18.675,9.17,19.763,8,21.565,8c0.732,0.731,0.381,2.656,0.102,3.594 c0.836,0.945,1.328,2.066,1.328,3.226c0,2.697-1.904,4.684-5.894,5.097C18.199,20.49,19,22.1,19,23.313v2.734 c0,0.104-0.023,0.179-0.035,0.268C23.641,24.676,27,20.236,27,15C27,8.373,21.627,3,15,3z" />
-                      </svg>
-                    </a>
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      title="Launch Live App"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="svg">
-                        <path d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.97 7 1.96 2 6.953-7 3.992 4v-10z" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-                <div className="overlay">
-                  <p className="desc">{project.description}</p>
-                  <div className="tech-list">
-                    {project.tech.map((t, idx) => (
-                      <span key={idx} className="tech-badge">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="bottom-section flex-1 flex flex-col justify-between">
-                <span className="title">{project.title}</span>
-                <div className="row row1">
-                  <div className="item">
-                    <span className="big-text">{project.tech.length}</span>
-                    <span className="regular-text">Tech Used</span>
-                  </div>
-                  <div className="item">
-                    <span className="big-text">{project.latency}</span>
-                    <span className="regular-text">Latency</span>
-                  </div>
-                  <div className="item">
-                    <span className="big-text text-green-400 font-extrabold uppercase">Online</span>
-                    <span className="regular-text">Status</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div className="w-full flex flex-col items-center justify-center gap-6 py-2">
+      {/* 3D Depth Carousel View */}
+      <div className="w-full h-[420px] relative overflow-hidden rounded-2xl bg-gradient-to-b from-primary/40 to-black/40 border border-white/10 backdrop-blur-sm shadow-2xl">
+        <DepthCarousel
+          items={carouselItems}
+          cardWidth={310}
+          cardHeight={390}
+          radius={18}
+          tint="#05060a"
+          depth={220}
+          spread={90}
+          tilt={22}
+          tiltDirection="right"
+          perspective={1400}
+          visibleCards={4}
+          falloff={0.2}
+          blur={6}
+          autoplay={true}
+          autoplayDelay={3500}
+          loop={true}
+          showControls={true}
+          showIndicators={true}
+          onChange={(index) => setActiveIndex(index)}
+        />
+      </div>
+
+      {/* Active Project Highlight Bar */}
+      <div className="w-full max-w-4xl bg-black/60 border border-white/15 rounded-xl p-4 backdrop-blur-md shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 text-left transition-all duration-300">
+        <div className="flex-1 space-y-1">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+              {activeProject.category}
+            </span>
+            <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              {activeProject.host} ({activeProject.latency})
+            </span>
+          </div>
+          <h4 className="text-lg font-bold text-white tracking-wide">
+            {activeProject.title}
+          </h4>
+          <p className="text-xs text-white/70 font-light line-clamp-2">
+            {activeProject.description}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          <a
+            href={getGithubLink(activeProject.link)}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="p-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all border border-white/15 flex items-center gap-2 text-xs font-medium"
+            title="View GitHub Repository"
+          >
+            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>Source Code</span>
+          </a>
+
+          <a
+            href={activeProject.link}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="px-4 py-2.5 rounded-lg bg-accent text-white hover:bg-accent/85 transition-all font-semibold text-xs flex items-center gap-1.5 shadow-lg shadow-accent/25"
+          >
+            <span>Launch Live App</span>
+            <svg className="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
