@@ -2,7 +2,6 @@ import { Sora } from "next/font/google";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import CustomCursor from "./CustomCursor";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { navData } from "./Nav";
 
@@ -162,9 +161,6 @@ const Layout = ({ children }) => {
     <main
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
     >
-      {/* Custom interactive cursor follow */}
-      <CustomCursor />
-
       {/* Dynamic theme color switcher */}
       <ThemeSwitcher />
 

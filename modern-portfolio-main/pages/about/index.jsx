@@ -26,6 +26,7 @@ import { BsArrowUpRight } from "react-icons/bs";
 
 import Avatar from "../../components/Avatar";
 import Circles from "../../components/Circles";
+import MaskedHeading from "../../components/MaskedHeading";
 import { fadeIn } from "../../variants";
 
 //  data
@@ -215,15 +216,31 @@ const About = () => {
       <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
         {/* text */}
         <div className="flex-1 flex flex-col justify-center">
-          <motion.h2
+          <motion.div
             variants={fadeIn("right", 0.2)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h2"
+            className="mb-4"
           >
-            Engineering <span className="text-accent">scalable</span> systems & backend solutions.
-          </motion.h2>
+            <MaskedHeading
+              text="Engineering Scalable Systems & Backend Solutions"
+              tag="h2"
+              mediaType="image"
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop"
+              fillScale={1.3}
+              parallax={28}
+              drift={18}
+              brightness={1.2}
+              saturation={1.3}
+              reveal="rise"
+              trigger="view"
+              weight={800}
+              align="left"
+              textScale={0.07}
+              className="max-w-[650px] mx-auto xl:mx-0 text-[28px] sm:text-[38px] md:text-[48px]"
+            />
+          </motion.div>
           <motion.p
             variants={fadeIn("right", 0.4)}
             initial="hidden"

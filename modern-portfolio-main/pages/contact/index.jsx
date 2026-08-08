@@ -4,6 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { fadeIn } from "../../variants";
 import { useState } from "react";
 import AnimatedInput from "../../components/AnimatedInput";
+import MaskedHeading from "../../components/MaskedHeading";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,15 +38,31 @@ const Contact = () => {
         {/* main container */}
         <div className="flex flex-col w-full xl:max-w-[1100px] px-4 md:px-0">
           {/* heading */}
-          <motion.h2
+          <motion.div
             variants={fadeIn("up", 0.2)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h2 text-center xl:text-left mb-12"
+            className="mb-8"
           >
-            Contact<span className="text-accent">.</span>
-          </motion.h2>
+            <MaskedHeading
+              text="Contact Me."
+              tag="h2"
+              mediaType="image"
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop"
+              fillScale={1.3}
+              parallax={26}
+              drift={18}
+              brightness={1.2}
+              saturation={1.3}
+              reveal="rise"
+              trigger="view"
+              weight={800}
+              align="left"
+              textScale={0.11}
+              className="text-[32px] sm:text-[44px] md:text-[54px]"
+            />
+          </motion.div>
 
           {/* grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
