@@ -2,6 +2,7 @@ import { Sora } from "next/font/google";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import CustomCursor from "./CustomCursor";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { navData } from "./Nav";
@@ -9,6 +10,10 @@ import { navData } from "./Nav";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import TopLeftImg from "../components/TopLeftImg";
+
+const SwarmCursor = dynamic(() => import("./SwarmCursor"), {
+  ssr: false,
+});
 
 // setup font
 const sora = Sora({
@@ -161,6 +166,21 @@ const Layout = ({ children }) => {
     <main
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
     >
+      {/* Interactive WebGL particle swarm background */}
+      <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+        <SwarmCursor
+          color="#f13024"
+          accentColor="#ffffff"
+          count={12}
+          size={8}
+          speed={2.5}
+          spread={100}
+          wander={0.25}
+          trail={0.75}
+          scatterOnClick
+        />
+      </div>
+
       {/* Custom interactive cursor follow */}
       <CustomCursor />
 

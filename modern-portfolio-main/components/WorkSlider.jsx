@@ -11,6 +11,16 @@ import "swiper/css/navigation";
 
 const projects = [
   {
+    title: "Media Collector",
+    category: "Full-Stack Web App",
+    tech: ["React", "Next.js", "Tailwind CSS", "Vercel"],
+    description: "A comprehensive media collection management app to discover, track, organize, and manage media content seamlessly with real-time UI interactivity.",
+    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop",
+    link: "https://media-collector-amber.vercel.app/",
+    host: "media_collector.sys",
+    latency: "16ms"
+  },
+  {
     title: "Wikipedia Clone",
     category: "Web Application",
     tech: ["HTML5", "CSS3", "JavaScript", "Wikipedia API"],
@@ -132,8 +142,13 @@ const projects = [
   },
 ];
 
+export { projects };
+
 const getGithubLink = (link) => {
   if (!link) return "https://github.com/itpRakib";
+  if (link.includes("media-collector-amber.vercel.app")) {
+    return "https://github.com/itpRakib/media-collector";
+  }
   if (link.includes("online-ticket-reservation-system-beta.vercel.app")) {
     return "https://github.com/itpRakib/Online-Ticket-Reservation-system";
   }
