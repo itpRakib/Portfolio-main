@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ParticlesContainer from "../components/ParticlesContainer";
 import ProjectsBtn from "../components/ProjectsBtn";
 import Avatar from "../components/Avatar";
+import MaskedHeading from "../components/MaskedHeading";
 
 import { fadeIn } from "../variants";
 
@@ -13,16 +14,30 @@ const Home = () => {
       <div className="w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
         <div className="text-center flex flex-col justify-center xl:pt-24 xl:text-left h-full container mx-auto">
           {/* title */}
-          <motion.h1
+          <motion.div
             variants={fadeIn("down", 0.2)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h1"
+            className="mb-4"
           >
-            Transforming Ideas <br /> Into{" "}
-            <span className="text-accent">Digital Reality</span>
-          </motion.h1>
+            <MaskedHeading
+              text="Transforming Ideas Into Digital Reality"
+              tag="h1"
+              mediaType="image"
+              src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop"
+              fillScale={1.3}
+              parallax={32}
+              drift={16}
+              brightness={1.15}
+              saturation={1.2}
+              reveal="rise"
+              trigger="view"
+              weight={800}
+              textScale={0.08}
+              className="max-w-[800px] mx-auto xl:mx-0 text-[32px] sm:text-[45px] md:text-[60px]"
+            />
+          </motion.div>
 
           {/* subtitle */}
           <motion.p
